@@ -11,7 +11,6 @@
 		$txtbuyprice	=	post('txtbuyprice');
 		$txtsaleprice	=	post('txtsaleprice');
 		$cboBranch = post('cboBranch');
-		$isStock = (isset($_POST['ckisStock'])) ? 1 : 0;
 			// Check if Products Dupplicate.
 			$CheckPrd = $db->query("SELECT `tblproductsbranch`.BranchID, `tblproductsbranch`.ProductID, tblproducts.ProductName
 									FROM `tblproductsbranch`
@@ -34,7 +33,6 @@
 							, BuyPrice
 							, SalePrice
 							,BranchID
-							,isStock
 							)
 							VALUES(
 							'".$ip."',
@@ -45,8 +43,7 @@
 							N'".sql_quote($txtqty)."',
 							N'".sql_quote($txtbuyprice)."',
 							N'".sql_quote($txtsaleprice)."',
-							'".$U_Brandid."',
-							'".$isStock."'
+							'".$U_Brandid."'
 							);
 							");	
 			}
@@ -61,9 +58,8 @@
 							, QTY
 							, BuyPrice
 							, SalePrice
-							, PrdCopied
-							,BranchID
-							,isStock
+							, PrdCopied,
+							BranchID
 							)
 							VALUES(
 							'".$ip."',
@@ -75,8 +71,7 @@
 							N'".sql_quote($txtbuyprice)."',
 							N'".sql_quote($txtsaleprice)."',
 							'1',
-							'".$U_Brandid."',
-							'".$isStock."'
+							'".$U_Brandid."'
 							);
 							");
 			
@@ -171,6 +166,7 @@ VALUES('".$buyid."','".$date_now."','".$U_id."','');");
 					}
 					else
 					{
+						
 												
 						$insertfor_old_prd=$db->query("INSERT INTO tblproductsbranch (ProductID, BranchID, BuyPrice, OtherCost, SalePrice, Qty)
 							VALUES (".$ProductID.", ".$U_Brandid.", BuyPrice,'".$BuyPrice."', ".$SalePrice.", ".$QTY.")");
@@ -203,13 +199,13 @@ VALUES('".$buyid."','".$date_now."','".$U_id."','');");
 			}
 			/*Move from tableprdtem to products*/
 			
-			$copy=$db->query("INSERT INTO tblproducts (ProductID, ProductName, ProductCategoryID, ProductCode,QTY, BuyPrice, SalePrice, isStock) 
-SELECT ProductID, ProductName, ProductCategoryID, ProductCode, QTY, BuyPrice, SalePrice, isStock
+			$copy=$db->query("INSERT INTO tblproducts (ProductID, ProductName, ProductCategoryID, ProductCode,QTY, BuyPrice, SalePrice) 
+SELECT ProductID, ProductName, ProductCategoryID, ProductCode, QTY, BuyPrice, SalePrice
 FROM tblprdtem WHERE tblprdtem.PrdCopied = '1' ");
 
 			/*Move from tableprdtem to productsBranch*/
-			$copy1=$db->query("INSERT INTO tblproductsbranch (ProductID, BranchID, BuyPrice, OtherCost, SalePrice, Qty, QtyInstock, TotalBuyPrice, isStock)
-						SELECT ProductID, ".$U_Brandid.", BuyPrice,'0', SalePrice, Qty, '0', Qty, isStock
+			$copy1=$db->query("INSERT INTO tblproductsbranch (ProductID, BranchID, BuyPrice, OtherCost, SalePrice, Qty, QtyInstock, TotalBuyPrice)
+						SELECT ProductID, ".$U_Brandid.", BuyPrice,'0', SalePrice, Qty, '0', Qty
 						FROM tblprdtem WHERE tblprdtem.PrdCopied = '1' ");
 			
 			if($copy){
@@ -218,6 +214,17 @@ FROM tblprdtem WHERE tblprdtem.PrdCopied = '1' ");
 				
 				//cRedirect('index.php');
 			}
+		}
+		
+		if(isset($_POST['btnSaveDirect'])){
+		$txtprdname = $_POST['txtprdname'];
+		$txtcode	=	post('txtcode');
+		$txtqty    =	post('txtqty');
+		$ProductCategoryID    =	post('cboPrdCate');
+		$txtbuyprice	=	post('txtbuyprice');
+		$txtsaleprice	=	post('txtsaleprice');
+		$cboBranch = post('cboBranch');
+			cRedirect('http://www.metkhmer.com');
 		}
 	
 ?>
@@ -374,18 +381,44 @@ FROM tblprdtem WHERE tblprdtem.PrdCopied = '1' ");
                                     </thead>
                                     <thead>
                                         <tr>
-                                            
-                                            <th>Category <?php echo $sarchprd ?></th>
+                                            <th>Category</th>
                                             <th>Name </th>
                                             <th>Code</th>
-                                           
                                             <th>BuyPrice</th>
                                             <th>SalePrice</th>  
-                                          
-                                            <th>Order Action</th>  
+                                          	<th>Order Action</th>  
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <form enctype="multipart/form-data">
+                                    	<tr>
+                                            <th>
+                                            	<select class="form-control" name="cboPrdCate">
+                                   					<?php
+                                                        $select=$db->query("SELECT ProductCategoryID, ProductCategoryName FROM `tblproductcategory`;");
+                                                        $rowselect=$db->dbCountRows($select);
+                                                        if($rowselect>0){
+                                                            
+                                                            while($row=$db->fetch($select)){
+                                                            $ProductCategoryID = $row->ProductCategoryID;
+                                                            $ProductCategoryName = $row->ProductCategoryName;
+                                                                echo'<option value='.$ProductCategoryID.'>'.$ProductCategoryName.'</option>';
+                                                            }
+                                                            
+                                                        }
+                                                   ?>
+                                                    </select>
+                                            </th>
+                                            <th><input name="txtprdname" class="form-control" placeholder="Enter text" required autofocus /></th>
+                                            <th><input name="txtcode" class="form-control" placeholder="Enter text" required /></th>
+                                            <th><input type="number" name="txtbuyprice"  onkeypress="return isNumberKey(event)"value="0" min="0" step="0.01" required data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" id="c2" /></th>
+                                            <th><input type="number" value="0" name="txtsaleprice" onKeyPress="return isNumberKey(event)" min="0" required step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" id="c2" /></th>  
+                                          	<th><input type="submit" name="btnSaveDirect" class="btn btn-primary" value="Save" /></th>  
+                                        </tr>
+                                        </form>
+                                        <tr  class="info" >
+                                            <td colspan="12"></td>
+                                        </tr>
                                         <!--<tr class="odd gradeX">
                                             <td>Trident</td>
                                             <td>Internet Explorer 4.0</td>
@@ -519,14 +552,6 @@ FROM tblprdtem WHERE tblprdtem.PrdCopied = '1' ");
                                 <span class="input-group-addon">$</span>
                                 <input type="number" value="0" name="txtsaleprice" onKeyPress="return isNumberKey(event)" min="0" required step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" id="c2" />
                             	</div>
-                          </div>
-                          
-                          <div class="form-group">
-                              
-                                <label>
-                                  <input type="checkbox" name="ckisStock" checked> &nbsp;&nbsp; isStock
-                                </label>
-                             
                           </div>
                      
                            <!--<div class="form-group">
