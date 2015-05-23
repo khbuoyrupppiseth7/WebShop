@@ -56,8 +56,52 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                       
-                        <small> <i class="fa fa-dashboard"></i>Buying History</small>
+                        
+                         <div class="row">
+                                <form class="form-inline">
+                                 <div class="col-md-6 pull-right">
+                                  <div class="form-group">
+                                   
+                                    <input type="text" class="form-control" data-beatpicker="true" id="exampleInputName2" name="txtFrom" 
+                                    <?php 
+                                        if ($txtFrom == "")
+                                        {
+                                             echo 'value="'.$date.'"';
+                                        }
+                                        else
+                                        {
+                                             echo 'value="'.$txtFrom.'"';
+                                        }
+                                    ?>
+                                   >
+                                  </div>
+                                  <div class="form-group">
+                                   
+                                    <input type="text"  class="form-control" data-beatpicker="true" id="exampleInputEmail2" name="txtTo"
+                                    <?php 
+                                        if ($txtTo == "")
+                                        {
+                                             echo 'value="'.$date.'"';
+                                        }
+                                        else
+                                        {
+                                             echo 'value="'.$txtTo.'"';
+                                        }
+                                    ?>
+                                    >
+                                  </div>
+                                  <div class="input-group">
+                                   <input type="text" class="form-control" placeholder="Search Products" value="<?php echo $sarchprd; ?>" name="sarchprd" autofocus>
+                                <div class="input-group-btn">
+                                    <button name="btnSearch" value="true" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                  
+                                </div>
+                                </div>
+
+                                </form>
+                                
+                            </div>
+                        
                     </h1>
                     <!--<ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -70,64 +114,14 @@
                
                  <div class="panel-body">
                             <div class="dataTable_wrapper">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="8">
-                                                <div class="row">
-                                                    
-                                                     <form class="form-inline">
-                                                     <div class="col-md-7 pull-right">
-                                                      <div class="form-group">
-                                                       
-                                                        <input type="text" class="form-control" data-beatpicker="true" id="exampleInputName2" name="txtFrom" 
-                                                        <?php 
-															if ($txtFrom == "")
-															{
-																 echo 'value="'.$date.'"';
-															}
-															else
-															{
-																 echo 'value="'.$txtFrom.'"';
-															}
-														?>
-                                                       >
-                                                      </div>
-                                                      <div class="form-group">
-                                                       
-                                                        <input type="text"  class="form-control" data-beatpicker="true" id="exampleInputEmail2" name="txtTo"
-                                                        <?php 
-															if ($txtTo == "")
-															{
-																 echo 'value="'.$date.'"';
-															}
-															else
-															{
-																 echo 'value="'.$txtTo.'"';
-															}
-														?>
-                                                        >
-                                                      </div>
-                                                      <div class="input-group">
-                                                       <input type="text" class="form-control" placeholder="Search Products" value="<?php echo $sarchprd; ?>" name="sarchprd" autofocus>
-                                                    <div class="input-group-btn">
-                                                        <button name="btnSearch" value="true" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                                                      
-                                                    </div>
-                                                    </div>
-            
-                                                    </form>
-                                                    
-                                                </div>
-                                            </th>
-                                           
-                                        </tr>
-                                    </thead>
+                                <table class="table table-striped table-bordered table-hover sortable" id="dataTables-example">
+                                    
                                     <thead>
                                         <tr>
                                             
                                             <th class="col-md-2 text-center">Date</th>
                                             <th class="text-center">Name</th>
+                                            <th class="text-center">Code</th>
                                             <th class="col-md-2 text-center">Branch</th>
                                             <th class="col-md-1 text-center">QTY</th>
                                             <th class="col-md-1 text-center">Price</th>
@@ -159,6 +153,7 @@
 													tblproducts_buydetail.BuyDetailID,
 													tblproducts_buydetail.ProductID,
 													tblproducts.ProductName,
+													tblproducts.ProductCode,
 													tblbranch.BranchName,
 													tblproducts_buydetail.Qty,
 													tblproducts_buydetail.OtherCost,
@@ -189,6 +184,7 @@
 													tblproducts_buydetail.BuyDetailID,
 													tblproducts_buydetail.ProductID,
 													tblproducts.ProductName,
+													tblproducts.ProductCode,
 													tblbranch.BranchName,
 													tblproducts_buydetail.Qty,
 													tblproducts_buydetail.OtherCost,
@@ -227,6 +223,7 @@
 												$OtherCost = $row->OtherCost;
 												$BuyPrice = $row->BuyPrice;
 												$CalcMin = $row->CalcMin;
+												$ProductCode = $row->ProductCode;
 												
 												$BuyingDate = date("F d, Y H:i:s",strtotime($row->BuyingDate));
 												
@@ -237,6 +234,7 @@
 													echo'<tr class="even">
 															<td class="col-md-2">'.$BuyingDate.'</td>
 															<td>'.$ProductName.'</td>
+															<td>'.$ProductCode.'</td>
 															<td class="col-md-1 text-left">'.$BranchName.'</td>
 															<td class="col-md-1 text-center">'.$Qty.'</td>
 															<td class="col-md-1 text-right">$ '.$BuyPrice.'</td>
@@ -249,6 +247,7 @@
 													echo'<tr class="even">
 															<td class="col-md-2">'.$BuyingDate.'</td>
 															<td>'.$ProductName.'</td>
+															<td>'.$ProductCode.'</td>
 															<td class="col-md-1 text-left">'.$BranchName.'</td>
 															<td class="col-md-1 text-center">'.$Qty.'</td>
 															<td class="col-md-1 text-right">$ '.$BuyPrice.'</td>

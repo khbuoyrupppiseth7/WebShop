@@ -26,8 +26,7 @@
 							, ProductCode
 							, QTY
 							, BuyPrice
-							, SalePrice
-							, isStock)
+							, SalePrice)
 							VALUES(
 							'".$ip."',
 							'".$ProductID."',
@@ -36,8 +35,7 @@
 							N'".sql_quote($ProductCode)."',
 							N'1',
 							N'".sql_quote($BuyPrice)."',
-							N'".sql_quote($SalePrice)."',
-							N'".sql_quote($isStock)."'
+							N'".sql_quote($SalePrice)."'
 							);
 							");
 			}

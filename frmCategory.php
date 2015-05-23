@@ -33,8 +33,30 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                       
-                        <small><a ><i class="fa fa-dashboard"></i> Branch Info</a></small>
+                        <div class="row">
+                             
+                                <div class="col-md-3 pull-left">
+                                    
+                                   <button type="button" class="btn btn-info" aria-label="Left Align">
+                                    Category
+                                   </button>
+                                    <button type="button" class="glyphicon glyphicon-plus btn btn-primary"  data-toggle="modal" data-target="#NewUser"></button>
+                                 </div>
+                               
+                               
+                              <form  role="search">
+                                                    <div class="col-md-3 pull-right">
+                                                      	
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" placeholder="Search" value="<?php echo $sarchprd; ?>" name="sarchprd" autofocus>
+                                                                <div class="input-group-btn">
+                                                                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                                                </div>
+                                                            </div>
+                                                       
+                                                    </div>
+                                                     </form>
+                         </div>
                     </h1>
                     <!--<ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -46,21 +68,7 @@
                 <!-- Main content -->
                
                  <div class="panel-body">
-                            <div class="dataTable_wrapper">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="7">
-                                                <div class="row">
-                                                     <div class="col-md-3">
-                                                      	<button type="button" class="glyphicon glyphicon-plus btn btn-primary"  data-toggle="modal" data-target="#NewUser"></button>
-                                                        </div>
-                                                        
-                                                    
-
-                    
-                                                  
-                                                       <!-- Check Out Form -->
+                 <!-- Check Out Form -->
                                                         <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                                                           <div class="modal-dialog modal-sm">
                                                             <div class="modal-content">
@@ -96,25 +104,9 @@
                                                           </div>
                                                         </div>
                                                         <!-- Check Out Form -->
-                                                    
-                                                    <form  role="search">
-                                                    <div class="col-md-3 pull-right">
-                                                      	
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control" placeholder="Search" value="<?php echo $sarchprd; ?>" name="sarchprd" autofocus>
-                                                                <div class="input-group-btn">
-                                                                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                                                                </div>
-                                                            </div>
-                                                       
-                                                    </div>
-                                                     </form>
-                                                    
-                                                </div>
-                                            </th>
-                                           
-                                        </tr>
-                                    </thead>
+                            <div class="dataTable_wrapper">
+                                <table class="table table-striped table-bordered table-hover sortable" id="dataTables-example">
+                                   
                                     <div id="edit-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">

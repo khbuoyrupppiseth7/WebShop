@@ -127,31 +127,14 @@ VALUES('".$buyid."',Now(),'".$U_id."','');");
                 <section class="content-header">
                     <h1>
                        
-                        <small><a><i class="fa fa-dashboard"></i> Sale History</a></small>
-                    </h1>
-                    <!--<ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                         
-                        <li class="active">Dashboard</li>
-                    </ol>-->
-                </section>
-
-                <!-- Main content -->
-               
-                 <div class="panel-body">
-                            <div class="dataTable_wrapper">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="11">
-                                                <div class="row">
+                        <div class="row">
                                                     
-                                                    
-                                                   <a href="invoicesaling_toOtherBranch.php">
+                                                   <a >
                                                     <div class="col-md-3 pull-left">
                                                     	
-                                                       <button type="button" class="btn btn-default" aria-label="Left Align">
-  <span class="glyphicon glyphicon-new-window" aria-hidden="true"> 
+                                                       <button type="button" class="btn btn-info" aria-label="Left Align">
+ 														Report Sale
   														
                                                      </div>
                                                    </a> 
@@ -198,10 +181,20 @@ VALUES('".$buyid."',Now(),'".$U_id."','');");
                                                     </form>
                                                     
                                                 </div>
-                                            </th>
-                                           
-                                        </tr>
-                                    </thead>
+                    </h1>
+                    <!--<ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                        
+                        <li class="active">Dashboard</li>
+                    </ol>-->
+                </section>
+
+                <!-- Main content -->
+               
+                 <div class="panel-body">
+                            <div class="dataTable_wrapper">
+                                <table class="table table-striped table-bordered table-hover sortable" id="dataTables-example">
+                                    
                                  <?php
 								 	if($_SESSION['Level']=='1'){
 										echo ' <thead>
@@ -487,7 +480,7 @@ VALUES('".$buyid."',Now(),'".$U_id."','');");
 													
 													
 												}
-												echo '<tr class="odd gradeX">
+												echo '<tr class="odd gradeX btn btn-danger" >
 																<td colspan="7" class="text-right">Total</td>
 															   
 																<td class="text-right"> $ '.$TotalIncome.'</td>
