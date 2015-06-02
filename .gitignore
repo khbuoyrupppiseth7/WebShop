@@ -1,2 +1,2 @@
-*.DS_Store
-.idea
+$ cat .gitignore
+parse.php

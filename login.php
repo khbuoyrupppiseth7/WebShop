@@ -37,7 +37,7 @@ if(isset($_POST['btnsave'])){
 		
 		if($Level == 2)
 		{
-			cRedirect('frmSalePrd.php');
+			cRedirect('index.php');
 			
 		}
 		else if ($Level == 1)

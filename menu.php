@@ -28,17 +28,14 @@
                                              
 						<?php
 						if($_SESSION['Level']=='1'){
-							echo '<li class="treeview">
-								   <a >
-										1. <span>Buy Products</span>
-										<i class="fa fa-angle-left pull-right"></i>
+							echo '<li >
+								   <a href="index.php">
+										<span>Buy & Sale Products</span>
+										
 								   </a>
-											<ul class="treeview-menu">
-												<li><a href="index.php">1.1 Buy Products </a></li>
-												<li><a href="invoicebuying.php">1.2 Report Buying</a></li>
-											</ul>
+											
 								</li>';
-							echo '<li class="treeview">
+							/*echo '<li class="treeview">
 								   <a >
 									2. <span>Sale Products</span>
 										<i class="fa fa-angle-left pull-right"></i>
@@ -48,15 +45,14 @@
 											<li><a href="invoicesaling.php">2.2 Report Salling</a></li>
 										    <li><a href="invoicesalingofuser.php">2.2 Report User Salling</a></li>
 										</ul>
-									</li>';
+									</li>';*/
 							echo'<li class="treeview">
-								<a >3. <span>Setting</span>
+								<a > <span>Setting</span>
 								<i class="fa fa-angle-left pull-right"></i>
 								</a>
 										<ul class="treeview-menu">
-											<li><a href="frmbranch.php">3.1 Branch</a></li>
-											<li><a href="frmtotalproducts.php?BranchID=0">3.2 All Products</a></li>
-											<li><a href="frmCategory.php">3.3 Category</a></li>
+											<li><a href="frmbranch.php">Branch</a></li>
+											<li><a href="frmCategory.php">Category</a></li>
 											
 										</ul>
 							</li>';
@@ -64,54 +60,35 @@
 							
 								echo '<li class="treeview">
 										<a href="userAccount.php">
-											4. <span>User Account</span>
+										    <span>User Account</span>
 											<i class="fa fa-angle-left pull-right"></i>
 										</a>
 												<ul class="treeview-menu">
-													
-													<li><a href="userAccount.php">4.1 User </a></li>
-													
-												   
-													
-													<li><a href="UserChangePassword.php">4.2 Change Password</a></li>
-													<li><a href="logout.php">4.3 Logout</a></li>
+													<li><a href="userAccount.php">User Account </a></li>
+													<li><a href="UserChangePassword.php">Change Password</a></li>
+													<li><a href="logout.php">Logout</a></li>
 												</ul>
 									</li>';	
 									
 							}
 							else
 							{
-								echo '<li class="treeview">
-								   <a >
-										1. <span>Buy Products</span>
+								echo '<li>
+								   <a href="index.php">
+									    <span>Buy Products</span>
 										<i class="fa fa-angle-left pull-right"></i>
 								   </a>
-											<ul class="treeview-menu">
-												<li><a href="index.php">1.1 Buy Products </a></li>
-												
-											</ul>
+										
 								</li>';
-								echo '<li class="treeview">
-									   <a >
-											2. <span>Sale Products</span>
-											<i class="fa fa-angle-left pull-right"></i>
-									   </a>
-												<ul class="treeview-menu">
-													<li><a href="frmSalePrd.php">2.1 Sale Products </a></li>
-													<li><a href="invoicesaling.php">2.2 Report Salling</a></li>
-													<li><a href="frmtotalproducts_user.php">2.3 All Products</a></li>
-														
-												
-												</ul>
-									</li>';
+								
 								echo '<li class="treeview">
 										<a href="userAccount.php">
-											3. <span>User Account</span>
+											 <span>User Account</span>
 											<i class="fa fa-angle-left pull-right"></i>
 										</a>
 												<ul class="treeview-menu">
-													<li><a href="UserChangePassword.php">3.1 Change Password</a></li>
-													<li><a href="logout.php">3.2 Logout</a></li>
+													<li><a href="UserChangePassword.php">Change Password</a></li>
+													<li><a href="logout.php">Logout</a></li>
 												</ul>
 									</li>';	
 							}

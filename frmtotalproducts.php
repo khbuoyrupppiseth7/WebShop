@@ -130,27 +130,12 @@ VALUES('".$buyid."',Now(),'".$U_id."','');");
                     <h1>
                        
                         <small><a ><i class="fa fa-dashboard"></i> All Products Info</a></small>
-                    </h1>
-                    <!--<ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Buy Info</a></li>
                         
-                        <li class="active">Dashboard</li>
-                    </ol>-->
-                </section>
-
-                <!-- Main content -->
-               
-                 <div class="panel-body">
-                            <div class="dataTable_wrapper">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="7">
-                                                <div class="row">
+                        <div class="row">
                                                     
-                                                     <form class="form-inline">
-                                                     <div class="col-md-12 pull-right">
                                                      
+                                                     <div class="col-md-12 pull-right">
+                                                     <form class="form-inline">
                                                       <div class="form-group">
                                                            
                                                             <select class="form-control" name="BranchID" >
@@ -192,11 +177,21 @@ VALUES('".$buyid."',Now(),'".$U_id."','');");
                                                     </form>
                                                     
                                                 </div>
-                                               
-                                            </th>
-                                           
-                                        </tr>
-                                    </thead>
+                        
+                    </h1>
+                    <!--<ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-dashboard"></i> Buy Info</a></li>
+                        
+                        <li class="active">Dashboard</li>
+                    </ol>-->
+                </section>
+
+                <!-- Main content -->
+               
+                 <div class="panel-body">
+                            <div class="dataTable_wrapper">
+                                <table class="table table-striped table-bordered table-hover sortable" id="dataTables-example">
+                                    
                                     <thead>
                                         <tr>
                                             <th class="col-md-2 text-center">Name</th>

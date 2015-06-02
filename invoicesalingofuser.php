@@ -127,98 +127,77 @@ VALUES('".$buyid."',Now(),'".$U_id."','');");
                 <section class="content-header">
                     <h1>
                        
-                        <small><a><i class="fa fa-dashboard"></i> Report Salling By User</a></small>
-                    </h1>
-                    <!--<ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        
-                        <li class="active">Dashboard</li>
-                    </ol>-->
-                </section>
-
-                <!-- Main content -->
-               
-                 <div class="panel-body">
-                            <div class="dataTable_wrapper">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="11">
-                                                <div class="row">
-                                                <form class="form-inline">
-                                                    <div class="col-md-3 pull-left">
-                                                    	
-                                                       <div class="form-group">
+                         <div class="row">
+                                                
+                                                    
+                                                
+                                                     <form class="form-inline">
+                                                     <div class="col-md-3 pull-left">
+                                                    	<div class="form-group">
                                                            
                                                             <select class="form-control" name="UserID" >
                                                             	
-  <?php
-        
-            if($U_id == 1)
-					{
-						$select=$db->query("SELECT UserID, BranchID, UserName FROM tblusers ORDER BY UserName");
-					}
-			else
-			{
-				$select=$db->query("SELECT UserID, BranchID, UserName FROM tblusers WHERE UserID != 1 ORDER BY UserName");
-			}
-            
-            $rowselect=$db->dbCountRows($select);
-            if($rowselect>0){
-                while($row=$db->fetch($select)){
-                $UserID = $row->UserID;
-                $UserName = $row->UserName;
-                                                                          
-                     if($getUserID == $UserID)
-                    {
-                        echo'<option value='.$UserID.' selected>'.$UserName.'</option>';
-                    }
-                    else
-                    {
-                        echo'<option value='.$UserID.'>'.$UserName.'</option>';
-                    }
-                } 
-                
-            }
-
-   ?>
+																	  <?php
+                                                                            
+																		if($U_id == 1)
+																				{
+																					$select=$db->query("SELECT UserID, BranchID, UserName FROM tblusers ORDER BY UserName");
+																				}
+																		else
+																		{
+																			$select=$db->query("SELECT UserID, BranchID, UserName FROM tblusers WHERE UserID != 1 ORDER BY UserName");
+																		}
+																		
+																		$rowselect=$db->dbCountRows($select);
+																		if($rowselect>0){
+																			while($row=$db->fetch($select)){
+																			$UserID = $row->UserID;
+																			$UserName = $row->UserName;
+																																	  
+																				 if($getUserID == $UserID)
+																				{
+																					echo'<option value='.$UserID.' selected>'.$UserName.'</option>';
+																				}
+																				else
+																				{
+																					echo'<option value='.$UserID.'>'.$UserName.'</option>';
+																				}
+																			} 
+																			
+																		}
+                                                                    
+                                                                       ?>
                                                           	
                                                             </select>
                                                       </div>
-  														
                                                      </div>
-                                              
                                                      
                                                      <div class="col-md-7 pull-right">
                                                       <div class="form-group">
                                                        
-                                                        <input type="text" class="form-control" data-beatpicker="true" id="exampleInputName2" name="txtFrom" 
-                                                        <?php 
-															if ($txtFrom == "")
-															{
-																 echo 'value="'.$date.'"';
-															}
-															else
-															{
-																 echo 'value="'.$txtFrom.'"';
-															}
-														?>
-                                                       >
+                                                        <input type="text" class="form-control some_class" <?php 
+																if ($txtFrom == "")
+																{
+																	 echo 'value="'.$date_now.'"';
+																}
+																else
+																{
+																	 echo 'value="'.$txtFrom.'"';
+																}
+															?>  name="txtFrom" id="some_class_1"/>
                                                       </div>
                                                       <div class="form-group">
                                                        
-                                                        <input type="text"  class="form-control" data-beatpicker="true" id="exampleInputEmail2" name="txtTo"
-                                                        <?php 
-															if ($txtTo == "")
-															{
-																 echo 'value="'.$date.'"';
-															}
-															else
-															{
-																 echo 'value="'.$txtTo.'"';
-															}
-														?>
-                                                        >
+                                                         <input type="text" class="form-control some_class" <?php 
+																if ($txtFrom == "")
+																{
+																	 echo 'value="'.$date_now.'"';
+																}
+																else
+																{
+																	 echo 'value="'.$txtTo.'"';
+																}
+															?>  name="txtTo" id="some_class_1"/>
                                                       </div>
                                                       <div class="input-group">
                                                        <input type="text" class="form-control" placeholder="Search Products" value="<?php echo $sarchprd; ?>" name="sarchprd" autofocus>
@@ -231,10 +210,16 @@ VALUES('".$buyid."',Now(),'".$U_id."','');");
                                                     </form>
                                                     
                                                 </div>
-                                            </th>
-                                           
-                                        </tr>
-                                    </thead>
+                    </h1>
+                    
+                </section>
+
+                <!-- Main content -->
+               
+                 <div class="panel-body">
+                            <div class="dataTable_wrapper">
+                                <table class="table table-striped table-bordered table-hover sortable" id="dataTables-example">
+                                   
                                  <?php
 								 	if($_SESSION['Level']=='1'){
 										echo ' <thead>
@@ -283,7 +268,7 @@ VALUES('".$buyid."',Now(),'".$U_id."','');");
 															LEFT JOIN tblbranch
 															ON tblbranch.BranchID = tbl_customerorder.SelltoOtherBranch
 											WHERE (tblproducts.ProductName LIKE '%".$sarchprd."%' OR tblproducts.ProductCode LIKE '%".$sarchprd."%' )
-											AND (tbl_customerorder.CustomerOrderDate BETWEEN '".$txtFrom." 01:01:01' AND '".$txtTo." 23:59:59')
+											AND (tbl_customerorder.CustomerOrderDate BETWEEN '".$txtFrom." AND '".$txtTo.")
 											AND tbl_customerorder.UserID = '".$getUserID."'
 											ORDER BY tbl_customerorder.CustomerOrderDate DESC");
 									
@@ -358,7 +343,7 @@ VALUES('".$buyid."',Now(),'".$U_id."','');");
 															LEFT JOIN tblbranch
 															ON tblbranch.BranchID = tbl_customerorder.SelltoOtherBranch
 											WHERE (tblproducts.ProductName LIKE '%".$sarchprd."%' OR tblproducts.ProductCode LIKE '%".$sarchprd."%' )
-											AND (tbl_customerorder.CustomerOrderDate BETWEEN '".$txtFrom." 01:01:01' AND '".$txtTo." 23:59:59')
+											AND (tbl_customerorder.CustomerOrderDate BETWEEN '".$txtFrom."' AND '".$txtTo."')
 											AND tbl_customerorder.UserID = '".$getUserID."'
 											ORDER BY tbl_customerorder.CustomerOrderDate DESC");
 									

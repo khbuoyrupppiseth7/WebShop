@@ -6,14 +6,9 @@
 	if(isset($_POST['btnAddNewPrd'])){
 		$txtQty    =	post('txtQty');
 		$txtbuyprice	=	post('txtBuyPrice');
-		$txtsaleprice	=	post('txtSalePrice');
-		$txtPrdName = post('txtPrdName');
-		$txtPrdCode = post('txtPrdCode');
-
+		$txtsaleprice	=	post('txtSalePrice');		
 		$insert=$db->query("UPDATE `tblprdtem`
-								SET ProductName = '".$txtPrdName."',
-								ProductCode = '".$txtPrdCode."',
-								QTY = '".$txtQty."',
+								SET QTY = '".$txtQty."',
 								BuyPrice = '".$txtbuyprice."',
 								SalePrice = '".$txtsaleprice."',
 								UpdateTem = '1'
@@ -164,19 +159,19 @@
                                             <th>Code</th>
                                             <th>QTY</th>
                                             <th>BuyPrice</th>
-                                            <th>SalePrice</th>
-                                            
+                                            <th>SalePrice</th>  
                                             <th class="">Save</th>  
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <form role="form" method="POST" enctype="multipart/form-data">
+                                    <form role="form" method="post">
                                         <?php
 										
-											$select=$db->query("SELECT IP ,ProductID, ProductName, ProductCode,  QTY, BuyPrice, SalePrice , isStock
+											$select=$db->query("SELECT IP ,ProductID, ProductName, ProductCode,  QTY, BuyPrice, SalePrice 
 FROM `tblprdtem`
 WHERE IP = '".$ip."' AND ProductID = '".$getProductID."'");
-													
+																			
+											
 											$rowselect=$db->dbCountRows($select);
 											if($rowselect>0){
 												$i = 1;
@@ -187,17 +182,13 @@ WHERE IP = '".$ip."' AND ProductID = '".$getProductID."'");
 												$QTY = $row->QTY;
 												$BuyPrice = $row->BuyPrice;
 												$SalePrice = $row->SalePrice;
-												$isStock = $row->isStock;
-												
-												
 												$x = $i++;
 												echo'<tr class="even">
-														<td><input name="txtPrdName" value="'.$ProductName.'" class="form-control" placeholder="Enter text" /></td>
-														<td><input name="txtPrdCode" value="'.$ProductCode.'" class="form-control" placeholder="Enter text" /></td>
+														<td>'.$ProductName.'</td>
+														<td>'.$ProductCode.'</td>
 														<td><input name="txtQty" onKeyUp="checkInput(this)" value="'.$QTY.'" class="form-control" placeholder="Enter text" /></td>
 														<td class="center"><input name="txtBuyPrice" onkeypress="return isNumberKey(event)" value="'.$BuyPrice.'" class="form-control" placeholder="Enter text" /></td>
 														<td class="center"><input name="txtSalePrice" onkeypress="return isNumberKey(event)" value="'.$SalePrice.'" class="form-control" placeholder="Enter text" /></td> 
-														
 														<td class="center">
 														
 														<input type="submit" name="btnAddNewPrd" class="btn btn-primary" value="Save" />
@@ -224,7 +215,109 @@ WHERE IP = '".$ip."' AND ProductID = '".$getProductID."'");
                             <!-- /.table-responsive -->
                       </div>
                         <!-- /.panel-body -->
-                       
+                        <!-- New User -->
+               <div class="modal fade" id="NewUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">                    
+                  <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+                         
+                      </div>
+                      <div class="modal-body">
+                        <form role="form" method="post">
+                        
+                          <!--<div class="form-group">
+                                <label>Choose Branch</label>
+                                <select class="form-control" name="cboBranch">
+                                   
+                               <?php
+                                 /*	$select=$db->query("SELECT BranchID, BranchName FROM `tblbranch`;");
+								  	$rowselect=$db->dbCountRows($select);
+                                    if($rowselect>0){
+                                        
+                                        while($row=$db->fetch($select)){
+                                        $BranchID = $row->BranchID;
+                                        $BranchName = $row->BranchName;
+                                            echo'<option value='.$BranchID.'>'.$BranchName.'</option>';
+                                        }
+                                        
+                                    }*/
+                               ?>
+                                </select>
+                                
+                          </div>-->
+                          <div class="form-group">
+                                <label>Choose Category</label>
+                                <select class="form-control" name="cboPrdCate">
+                                   
+                               <?php
+                                 	$select=$db->query("SELECT ProductCategoryID, ProductCategoryName FROM `tblproductcategory`;");
+								  	$rowselect=$db->dbCountRows($select);
+                                    if($rowselect>0){
+                                        
+                                        while($row=$db->fetch($select)){
+                                        $ProductCategoryID = $row->ProductCategoryID;
+                                        $ProductCategoryName = $row->ProductCategoryName;
+                                            echo'<option value='.$ProductCategoryID.'>'.$ProductCategoryName.'</option>';
+                                        }
+                                        
+                                    }
+                               ?>
+                                </select>
+                                
+                          </div>
+                          <div class="form-group">
+                            	<label>Product Name: </label>
+                                <input name="txtprdname" class="form-control" placeholder="Enter text" required />
+                          </div>
+                          <div class="form-group">
+                                <label>Products Code:</label>
+                                <input name="txtcode" class="form-control" placeholder="Enter text" />
+                          </div>
+                          <div class="form-group">
+                                <label>Products QTY:</label>
+                                <input name="txtqty" class="form-control" placeholder="Enter text" />
+                          </div>
+                          <div class="form-group">
+                                <label>Buy Price:</label>
+                                <div class="input-group"> 
+                                <span class="input-group-addon">$</span>
+                                <input type="number" name="txtbuyprice" value="1" min="0" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" id="c2" />
+                            	</div>
+                          </div>
+                          <div class="form-group">
+                                <label>Sale Price:</label>
+                                <div class="input-group"> 
+                                <span class="input-group-addon">$</span>
+                                <input type="number" value="1" name="txtsaleprice" min="0" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" id="c2" />
+                            	</div>
+                          </div>
+                     
+                           <!--<div class="form-group">
+                                <label>User Limit &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="rdstatus" id="optionsRadiosInline1" value="1" checked>Active
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="rdstatus" id="optionsRadiosInline2" value="0">Suspend
+                                </label>
+                               
+                            </div>
+                        -->
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            
+                            <input type="submit" name="btnAddNewPrd" class="btn btn-primary" value="Save" />
+                          </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <!-- End New User -->
+                
+                
+                
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
 

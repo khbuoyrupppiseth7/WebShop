@@ -2,231 +2,71 @@
 <?php include 'header.php';?>
 
 <?php
-	// Add new product to Produtct Tem
-	if(isset($_POST['btnAddNewPrd'])){
-		$txtprdname = $_POST['txtprdname'];
-		$txtcode	=	post('txtcode');
-		$txtqty    =	post('txtqty');
-		$ProductCategoryID    =	post('cboPrdCate');
-		$txtbuyprice	=	post('txtbuyprice');
-		$txtsaleprice	=	post('txtsaleprice');
-		$cboBranch = post('cboBranch');
-			// Check if Products Dupplicate.
-			$CheckPrd = $db->query("SELECT `tblproductsbranch`.BranchID, `tblproductsbranch`.ProductID, tblproducts.ProductName
-									FROM `tblproductsbranch`
-									INNER JOIN tblproducts
-									ON tblproductsbranch.ProductID = tblproducts.ProductID
-									WHERE BranchID = '".$U_Brandid."' AND ProductName = '".$txtprdname."'
-									");
-			$rowCheckPrd=$db->dbCountRows($CheckPrd);
-			if($rowCheckPrd>0){
-				$row=$db->fetch($CheckPrd);
-					$ProductID = $row->ProductID;
-					$ProductName = $row->ProductName;
-					$insert=$db->query("INSERT INTO tblprdtem (
-							IP
-							, ProductID
-							, ProductName
-							, ProductCategoryID
-							, ProductCode
-							, QTY
-							, BuyPrice
-							, SalePrice
-							,BranchID
-							)
-							VALUES(
-							'".$ip."',
-							'".$ProductID."',
-							N'".$ProductName."',
-							N'".sql_quote($ProductCategoryID)."',
-							N'".sql_quote($txtcode)."',
-							N'".sql_quote($txtqty)."',
-							N'".sql_quote($txtbuyprice)."',
-							N'".sql_quote($txtsaleprice)."',
-							'".$U_Brandid."'
-							);
-							");	
-			}
-			else
-			{
-				$insert=$db->query("INSERT INTO tblprdtem (
-							IP
-							, ProductID
-							, ProductName
-							, ProductCategoryID
-							, ProductCode
-							, QTY
-							, BuyPrice
-							, SalePrice
-							, PrdCopied,
-							BranchID
-							)
-							VALUES(
-							'".$ip."',
-							'".time()."',
-							N'".sql_quote($txtprdname)."',
-							N'".sql_quote($ProductCategoryID)."',
-							N'".sql_quote($txtcode)."',
-							N'".sql_quote($txtqty)."',
-							N'".sql_quote($txtbuyprice)."',
-							N'".sql_quote($txtsaleprice)."',
-							'1',
-							'".$U_Brandid."'
-							);
-							");
-			
-			}
-			
-		/*
+	
+	if(isset($_POST['btnSaveSalling'])){
+	
+		$autoid = time();
+		$ProductID = get('txtProductID');	
+		$ProductName = get('txtprdname');
+		$ProductCategoryID = get('txtProductCategoryID');
+		$ProductCode = get('txtProductCode');
+		$QTY = get('txtQty');
+		$BuyPrice = get('txtbuyprice');
+		$SalePrice = get('txtsaleprice');	
 		
-		$insert=$db->query("INSERT INTO tblprdtem (
-							IP
-							, ProductID
-							, ProductName
-							, ProductCategoryID
-							, ProductCode
-							, QTY
-							, BuyPrice
-							, SalePrice
-							, PrdCopied,
-							BranchID
-							)
-							VALUES(
-							'".$ip."',
-							'".time()."',
-							N'".sql_quote($txtprdname)."',
-							N'".sql_quote($ProductCategoryID)."',
-							N'".sql_quote($txtcode)."',
-							N'".sql_quote($txtqty)."',
-							N'".sql_quote($txtbuyprice)."',
-							N'".sql_quote($txtsaleprice)."',
-							'1',
-							'".$cboBranch."'
-							);
-							");*/
-			
-			/*if($insert){
+			/*Create Invoice Customer Sale*/
+			$InsertToCustomerOrder=$db->query(" INSERT INTO tbl_customerorder ( 
+					CustomerOrderID,
+					BranchID,
+					InvoiceNo,
+					CustomerOrderDate,
+					UserID
+					)
+					VALUES
+					(
+					'".$autoid."',
+					'".$U_Brandid."',
+					'".$autoid."',
+					'".$date_now."',
+					'".$U_id."'
+					)");
+									
+			/* $insertCustomerOrderdetail = $db->query("INSERT INTO `tbl_customerorderdetail`(
+					CustomerOrderDetailID,
+					BranchID,
+					CustomerOrderID,
+					ProductID,
+					Qty,
+					SalePrice,
+					BuyPrice,
+					perDicount,
+					AmtDiscount,
+					LastSalePrice,
+					Total,
+					Decription
+					)
+					VALUES
+					(
+					'".time().'2'."',
+					'".$U_Brandid."',
+					'".$autoid."',
+					'".$ProductID."',
+					'1',
+					'".$SalePrice."',
+					'".$BuyPrice."',
+					'0',
+					'0',
+					'0',
+					'',
+					'Powered by 7Technology'
+					)	
+				");
+									
+			 $deductQty= $db->query("UPDATE tblproductsbranch SET Qty =  Qty - 1 WHERE ProductID = '".$ProductID."' ");*/
+			 if($InsertToCustomerOrder){
 				cRedirect('index.php');
-			}*/
-		$error = "Error Internet Connection!";
-		}
-		
-		if(isset($_POST['btnCheckout'])){
-			$cboBranch = post('cboBranch');
-
-			$buyid = time();
-			
-			$InsertToTableBuy= $db->query("INSERT INTO tblproducts_buy (BuyID, BuyDate, UserID, Decription) 
-VALUES('".$buyid."','".$date_now."','".$U_id."','');");
-
-			$InsertToTableBuyDetail = $db->query("SELECT ProductID, QTY, BuyPrice, BranchID, SalePrice FROM tblprdtem ");
-			$rowselect=$db->dbCountRows($InsertToTableBuyDetail);
-			if($rowselect>0){
-				$x = 1;
-				while($row=$db->fetch($InsertToTableBuyDetail)){
-					$ProductID = $row->ProductID;
-					$QTY = $row->QTY;
-					$BuyPrice = $row->BuyPrice;
-					$BranchID = $row->BranchID;
-					$SalePrice = $row->SalePrice;
-					
-					$sfrombranch = $db->query("SELECT ProductID, BranchID FROM `tblproductsbranch` WHERE ProductID = '".$ProductID."' AND BranchID = '".$BranchID."'");
-					$cfrombranch=$db->dbCountRows($sfrombranch);
-					if($cfrombranch>0){
-						$row=$db->fetch($sfrombranch);
-						
-						/*Update Qty of ProductsBranch if products already Exit*/
-						$updateprdqty = $db->query("UPDATE `tblproductsbranch` SET
-												BuyPrice = (SELECT BuyPrice FROM tblprdtem WHERE ProductID = '".$ProductID."' ) ,
-												SalePrice = (SELECT SalePrice FROM tblprdtem WHERE ProductID = '".$ProductID."' ) ,
-												Qty = Qty + (SELECT Qty FROM tblprdtem WHERE ProductID = '".$ProductID."' ) 
-												WHERE ProductID = '".$ProductID."'
-												");
-	
-						/*Insert to tblproducts_buydetail*/
-						$newinsert = $db->query("INSERT INTO tblproducts_buydetail
-												( BuyDetailID,
-												BuyID, 
-												UserID,
-												ProductID,
-												Qty,
-												BuyPrice,
-												Decription )
-												VALUES
-												(
-												'".time().$x++ ."',
-												'".$buyid."',
-												'".$U_id."',
-												'".$ProductID."',
-												'".$QTY."',
-												'".$BuyPrice."',
-												''
-												)");
-							
-					}
-					else
-					{
-						
-												
-						$insertfor_old_prd=$db->query("INSERT INTO tblproductsbranch (ProductID, BranchID, BuyPrice, OtherCost, SalePrice, Qty)
-							VALUES (".$ProductID.", ".$U_Brandid.", BuyPrice,'".$BuyPrice."', ".$SalePrice.", ".$QTY.")");
-							
-						/*Insert to tblproducts_buydetail*/
-						$newinsert = $db->query("INSERT INTO tblproducts_buydetail
-												( BuyDetailID,
-												BuyID, 
-												UserID,
-												ProductID,
-												Qty,
-												BuyPrice,
-												Decription )
-												VALUES
-												(
-												'".time().$x++ ."',
-												'".$buyid."',
-												'".$U_id."',
-												'".$ProductID."',
-												'".$QTY."',
-												'".$BuyPrice."',
-												''
-												)");
-						
-						
-					}
-	
-				}
-				
-			}
-			/*Move from tableprdtem to products*/
-			
-			$copy=$db->query("INSERT INTO tblproducts (ProductID, ProductName, ProductCategoryID, ProductCode,QTY, BuyPrice, SalePrice) 
-SELECT ProductID, ProductName, ProductCategoryID, ProductCode, QTY, BuyPrice, SalePrice
-FROM tblprdtem WHERE tblprdtem.PrdCopied = '1' ");
-
-			/*Move from tableprdtem to productsBranch*/
-			$copy1=$db->query("INSERT INTO tblproductsbranch (ProductID, BranchID, BuyPrice, OtherCost, SalePrice, Qty, QtyInstock, TotalBuyPrice)
-						SELECT ProductID, ".$U_Brandid.", BuyPrice,'0', SalePrice, Qty, '0', Qty
-						FROM tblprdtem WHERE tblprdtem.PrdCopied = '1' ");
-			
-			if($copy){
-				$delete=$db->query("DELETE FROM `tblprdtem` WHERE IP = '".$ip."'");
-				$delete=$db->query("DELETE FROM `tblproductsbranch` WHERE BuyPrice IS NULL");
-				
-				//cRedirect('index.php');
-			}
-		}
-		
-		if(isset($_POST['btnSaveDirect'])){
-		$txtprdname = $_POST['txtprdname'];
-		$txtcode	=	post('txtcode');
-		$txtqty    =	post('txtqty');
-		$ProductCategoryID    =	post('cboPrdCate');
-		$txtbuyprice	=	post('txtbuyprice');
-		$txtsaleprice	=	post('txtsaleprice');
-		$cboBranch = post('cboBranch');
-			cRedirect('http://www.metkhmer.com');
-		}
-	
+			 }
+	}
 ?>
 
     <body class="skin-blue">
@@ -241,159 +81,40 @@ FROM tblprdtem WHERE tblprdtem.PrdCopied = '1' ");
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                       
-                        <small><i class="fa fa-dashboard"></i> Panel Buying ( Buy to Branch " <a ><?php echo $U_Branchname; ?> </a>")</small>
+                    		<div class="col-md-3 pull-left">
+                               	<a href="Report_Saling.php" title="Report Saling">
+                                   <button class="btn btn-success" type="submit">Report &nbsp;<i class="glyphicon glyphicon-print"></i></button>
+                                </a>
+                            </div>
+                            
+                           <div class="col-md-3 pull-right">
+                                <form  role="search" >
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search" value="<?php echo $sarchprd; ?>" name="sarchprd" autofocus>
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                        </div>
+                                    </div>
+                               </form>
+                            </div>
+                            &nbsp;
                         
                     </h1>
                     
-                    <!--<ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        
-                        <li class="active">Dashboard</li>
-                    </ol>-->
+                   
                 </section>
 
                 <!-- Main content -->
                
                  <div class="panel-body">
                             <div class="dataTable_wrapper">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="7">
-                                                <div class="row">
-                                                    
-                                                    <div class="col-md-3">
-                                                      	<button type="button" class="glyphicon glyphicon-plus btn btn-primary"  data-toggle="modal" data-target="#NewUser"></button>
-                                                       
-                                                    </div>
-                                                    
-                                                    <div class="col-md-6 pull-center" >
-                                                      	
-                                                            <button type="button" class="btn btn-default" aria-label="Left Align">
-  <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> 
-  
-														<?php
-                                                            $select=$db->query("SELECT COUNT(ProductID) AS TotalOrder FROM `tblprdtem` WHERE IP = '".$ip."';");
-                                                            $rowselect=$db->dbCountRows($select);
-                                                            if($rowselect>0){
-                                                                
-                                                                while($row=$db->fetch($select)){
-                                                                $TotalOrder = $row->TotalOrder;
-                                                            
-                                                                    echo'QTY Products: ' . $TotalOrder;
-                                                                }
-                                                                
-                                                            }
-                                                       ?>
-  </span>
-</button>
-													<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                                                            Total All Cart
-                                                            <span class="caret"></span>
-                                                          </button>
-                                                          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                                           <form method="post" enctype="multipart/form-data">
-                                                          <?php
-                                                                $select=$db->query("SELECT ProductID , ProductName, QTY FROM `tblprdtem`  WHERE IP = '".$ip."' Order by ProductName;");
-                                                                $rowselect=$db->dbCountRows($select);
-                                                                if($rowselect>0){
-                                                                    while($row=$db->fetch($select)){
-																	$ProductID = $row->ProductID;
-                                                                    $ProductName = $row->ProductName;
-                                                                    $QTY = $row->QTY;
-																		echo'<li role="presentation"><a role="menuitem" tabindex="-1" 
-																		href="frmBuyPrd-Editeachone.php?ProductID='.$ProductID.'">'.$ProductName.' ( '.$QTY.' ) </a> </li>';
-                                                                    } 
-																	echo '</ul>';
-																	//echo '<button type="button" class="glyphicon glyphicon-random btn btn-primary"  data-toggle="modal" data-target=".bs-example-modal-sm"> CheckOut</button>';
-																
-																	echo '<button type="submit" name="btnCheckout" class="glyphicon glyphicon-random btn btn-primary"  > Save</button>';
-																	echo '</form>';
-																
-                                                                }
-																else
-																{
-																		echo '</ul>';
-																		echo '<button type="button" class="glyphicon glyphicon-random btn btn-default"> Save</button>';
-																}
-                                                           ?>
-                                                            
-                                                        
-
-                                                       
-                                                    </div>
-                                                       <!-- Check Out Form -->
-                                                        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-                                                          <div class="modal-dialog modal-sm">
-                                                            <div class="modal-content">
-                                                                  <form method="post" enctype="multipart/form-data">
-                                                                  <!--<div class="form-group">
-                                                                        <label>Choose Branch</label>
-                                                                        <select class="form-control" name="cboBranch">
-                                                                           
-                                                                       <?php
-                                                                         	/*$select=$db->query("SELECT BranchID, BranchName FROM `tblbranch`;");
-                                                                            $rowselect=$db->dbCountRows($select);
-                                                                            if($rowselect>0){
-                                                                                
-                                                                                while($row=$db->fetch($select)){
-                                                                                $BranchID = $row->BranchID;
-                                                                                $BranchName = $row->BranchName;
-                                                                                    echo'<option value='.$BranchID.'>'.$BranchName.'</option>';
-                                                                                }
-                                                                                
-                                                                            }*/
-                                                                       ?>
-                                                                        </select>
-                                                                        
-                                                                  </div>-->
-                                                                   <div class="checkbox">
-                                                                        <label>
-                                                                          <input type="checkbox" checked> Check here to follow us.
-                                                                        </label>
-                                                                        <input type="submit" name="btnCheckout" cclass="glyphicon glyphicon-random btn btn-primary" value="Checkout" />
-                                                                       
-                                                                  	</div>
-                                                                     </form>
-                                                            </div>
-                                                          </div>
-                                                        </div>
-                                                        <!-- Check Out Form -->
-                                                    
-                                                    <form  role="search">
-                                                    <div class="col-md-3 pull-right">
-                                                      	
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control" placeholder="Search" value="<?php echo $sarchprd; ?>" name="sarchprd" autofocus>
-                                                                <div class="input-group-btn">
-                                                                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                                                                </div>
-                                                            </div>
-                                                       
-                                                    </div>
-                                                     </form>
-                                                    
-                                                </div>
-                                            </th>
-                                           
-                                        </tr>
-                                    </thead>
-                                    <thead>
-                                        <tr>
-                                            <th>Category</th>
-                                            <th>Name </th>
-                                            <th>Code</th>
-                                            <th>BuyPrice</th>
-                                            <th>SalePrice</th>  
-                                          	<th>Order Action</th>  
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <form enctype="multipart/form-data">
+                            	<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                   	<tbody>
+                                    
+                                    <form enctype="multipart/form-data" action="savedirectbuying.php">
                                     	<tr>
                                             <th>
-                                            	<select class="form-control" name="cboPrdCate">
+                                            	<select class="form-control" name="cboPrdCate1">
                                    					<?php
                                                         $select=$db->query("SELECT ProductCategoryID, ProductCategoryName FROM `tblproductcategory`;");
                                                         $rowselect=$db->dbCountRows($select);
@@ -409,30 +130,31 @@ FROM tblprdtem WHERE tblprdtem.PrdCopied = '1' ");
                                                    ?>
                                                     </select>
                                             </th>
-                                            <th><input name="txtprdname" class="form-control" placeholder="Enter text" required autofocus /></th>
-                                            <th><input name="txtcode" class="form-control" placeholder="Enter text" required /></th>
-                                            <th><input type="number" name="txtbuyprice"  onkeypress="return isNumberKey(event)"value="0" min="0" step="0.01" required data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" id="c2" /></th>
-                                            <th><input type="number" value="0" name="txtsaleprice" onKeyPress="return isNumberKey(event)" min="0" required step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" id="c2" /></th>  
+                                            <th><input name="txtprdname1" class="form-control" placeholder="Enter Product Name" required autofocus /></th>
+                                            <th><input name="txtcode1" class="form-control" placeholder="Enter Code" required /></th>
+                                            <th><input type="text" name="txtbuyprice1" placeholder="Enter Price" onKeyPress="return isNumberKey(event)" required class="form-control currency"  /></th>
+                                            <th><input type="text"  name="txtsaleprice1" placeholder="Enter Sale Price" required onKeyPress="return isNumberKey(event)"  class="form-control currency"  /></th>  
+                                           
                                           	<th><input type="submit" name="btnSaveDirect" class="btn btn-primary" value="Save" /></th>  
+                                        	</form>
                                         </tr>
-                                        </form>
-                                        <tr  class="info" >
-                                            <td colspan="12"></td>
+                                    </tbody>
+                                 </table>
+                                <table class="table table-striped table-bordered table-hover sortable" id="dataTables-example">
+                                   	
+                                    <thead>
+                                        <tr>
+                                            <th>Category</th>
+                                            <th>Name </th>
+                                            <th>Code</th>
+                                            <th>BuyPrice</th>
+                                            <th>SalePrice</th>  
+                                          
                                         </tr>
-                                        <!--<tr class="odd gradeX">
-                                            <td>Trident</td>
-                                            <td>Internet Explorer 4.0</td>
-                                            <td>Win 95+</td>
-                                            <td class="center">4</td>
-                                            <td class="center">4</td>
-                                        </tr>
-                                        <tr class="even gradeC">
-                                            <td>Trident</td>
-                                            <td>Internet Explorer 5.0</td>
-                                            <td>Win 95+</td>
-                                            <td class="center">5</td>
-                                            <td class="center">4</td>  
-                                        </tr>-->
+                                    </thead>
+                                    <tbody>
+                                  
+                                    	
                                         
                                         <?php
 											$select=$db->query("CALL spSearchPrdBuy('".$sarchprd."')");
@@ -454,24 +176,13 @@ FROM tblprdtem WHERE tblprdtem.PrdCopied = '1' ");
 														<td>'.$ProductCategoryName.'</td>
 														<td>'.$ProductName.'</td>
 														<td>'.$ProductCode.'</td>
-														
 														<td class="center"> $'.$BuyPrice.'</td>
-														<td class="center"> $'.$SalePrice.'</td> 
+														<td class="center" onClick="$("#Order").modal("show")>';
 														
-														<td class="center">
-														<a href="clickBuyPrd.php?ProductID='.$ProductID.'
-														&ProductName='.$ProductName.'
-														&ProductCategoryID='.$ProductCategoryID.'
-														&ProductCode='.$ProductCode.'
-														&QTY= 1
-														&BuyPrice='.$BuyPrice.'
-														&SalePrice='.$SalePrice.'
-														&sarchprd='.$sarchprd.'
-														">
-														<button type="button" class="btn btn-default" aria-label="Left Align">
-  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-</button></a>
-														</td>
+														echo "<input type=\"button\" onclick=\"myfunction('".$ProductID."','".$ProductName."','".$ProductCategoryID."','".$ProductCode."','1','".$BuyPrice."','".$SalePrice."')\" value=\"$ ".$SalePrice."\" />";
+														
+												echo '</td>
+												
 													</tr>';
 													
 												} 
@@ -495,7 +206,8 @@ FROM tblprdtem WHERE tblprdtem.PrdCopied = '1' ");
                       </div>
                         <!-- /.panel-body -->
                <!-- New User -->
-               <div class="modal fade" id="NewUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+               
+               <div class="modal fade" id="Order" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog">                    
                   <div class="modal-content">
                       <div class="modal-header">
@@ -504,77 +216,96 @@ FROM tblprdtem WHERE tblprdtem.PrdCopied = '1' ");
                          
                       </div>
                       <div class="modal-body">
-                        <form role="form" method="post">
-                        
-                         
-                          <div class="form-group">
-                                <label>Choose Category</label>
-                                <select class="form-control" name="cboPrdCate">
-                                   
-                               <?php
-                                 	$select=$db->query("SELECT ProductCategoryID, ProductCategoryName FROM `tblproductcategory`;");
-								  	$rowselect=$db->dbCountRows($select);
-                                    if($rowselect>0){
-                                        
-                                        while($row=$db->fetch($select)){
-                                        $ProductCategoryID = $row->ProductCategoryID;
-                                        $ProductCategoryName = $row->ProductCategoryName;
-                                            echo'<option value='.$ProductCategoryID.'>'.$ProductCategoryName.'</option>';
-                                        }
-                                        
-                                    }
-                               ?>
-                                </select>
-                                
-                          </div>
+                        <form enctype="multipart/form-data" action="savedirectsalling.php">
+                          
+                          <input type="hidden" name="txtProductID" id="ProductID">
+                          <input type="hidden" name="txtProductCategoryID" id="ProductCategoryID">
+                          <input type="hidden" name="txtProductCode" id="ProductCode">
+                          <input type="hidden" name="txtQty" value="1">
+                          
                           <div class="form-group">
                             	<label>Product Name: </label>
-                                <input name="txtprdname" class="form-control" placeholder="Enter text" required autofocus />
-                          </div>
-                          <div class="form-group">
-                                <label>Products Code:</label>
-                                <input name="txtcode" class="form-control" placeholder="Enter text" />
-                          </div>
-                          <div class="form-group">
-                                <label>Products QTY:</label>
-                                <input name="txtqty" onKeyUp="checkInput(this)" class="form-control" value="1" placeholder="Enter text" required />
+                                <input name="txtprdname" class="form-control" readonly id="txtPrdName" placeholder="Enter text" required autofocus />
                           </div>
                           <div class="form-group">
                                 <label>Buy Price:</label>
                                 <div class="input-group"> 
                                 <span class="input-group-addon">$</span>
-                                <input type="number" name="txtbuyprice"  onkeypress="return isNumberKey(event)"value="0" min="0" step="0.01" required data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" id="c2" />
+                                <input type="text" name="txtbuyprice"  onkeypress="return isNumberKey(event)"   required   class="form-control" id="buyprice" />
                             	</div>
                           </div>
                           <div class="form-group">
                                 <label>Sale Price:</label>
                                 <div class="input-group"> 
-                                <span class="input-group-addon">$</span>
-                                <input type="number" value="0" name="txtsaleprice" onKeyPress="return isNumberKey(event)" min="0" required step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" id="c2" />
+                                <span class="input-group-addon">Price</span>
+                                <input type="text"  name="txtsaleprice" onKeyUp="ChangetoKhmer()" id="dolar" onKeyPress="return isNumberKey(event)"   class="form-control " />
+                                <input type="text" name="txtsaleprice1" onKeyUp="ChangetoDolar()" id="khmer" onKeyPress="return isNumberKey(event)"  class="form-control "  />
                             	</div>
                           </div>
+                          
                      
-                           <!--<div class="form-group">
-                                <label>User Limit &nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="rdstatus" id="optionsRadiosInline1" value="1" checked>Active
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="rdstatus" id="optionsRadiosInline2" value="0">Suspend
-                                </label>
-                               
-                            </div>
-                        -->
                             <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             
-                            <input type="submit" name="btnAddNewPrd" class="btn btn-primary" value="Save" />
+                            <input type="submit" name="btnSaveSalling" class="btn btn-primary" value="Save" />
                           </div>
                       </form>
+                      
                     </div>
                   </div>
                 </div>
                 <!-- End New User -->
+                
+                <script type="text/javascript">				
+				
+					  		var dolar = document.getElementById("dolar");
+							var khmer = document.getElementById("khmer");
+							var txtPrdName = document.getElementById("txtPrdName");
+							var txtbuyprice = document.getElementById("buyprice");
+							var txtProductID = document.getElementById("ProductID");
+							var txtProductCategoryID = document.getElementById("ProductCategoryID");
+							var txtProductCode = document.getElementById("ProductCode");
+							
+							//'".$ProductID."','".$ProductName."','".$ProductCategoryID."','".$ProductCode."','1','".$BuyPrice."','".$SalePrice."'
+							
+							function myfunction(getProductID,getProductName,getProductCategoryID,getProductCode,getQty, getBuyPrice, getSalePrice)
+							{
+								$('#Order').modal('show');
+								//alert(getProductID + getProductID + getProductCategoryID + getQty)
+								txtPrdName.value = getProductName;
+								txtbuyprice.value = getBuyPrice;
+								dolar.value = getSalePrice;
+								txtProductID.value = getProductID;
+								txtProductCategoryID.value = getProductCategoryID;
+								txtProductCode.value = getProductCode;
+								
+								
+								khmer.value = parseFloat(dolar.value) * 40 ;
+							}
+										
+							function ChangetoKhmer() {
+									
+									if(dolar.value == '')
+									{
+										khmer.value = 0;
+									}
+									else
+									{
+										khmer.value = parseFloat(dolar.value) * 40 ;
+									}
+								}
+							function ChangetoDolar(){
+								
+								if(khmer.value == '')
+								{
+									dolar.value = 0;
+								}
+								else
+								{
+									dolar.value = parseFloat(khmer.value) / 40;
+								}
+							}
+					   </script>
                 
                 <!-- Check Out -->
 

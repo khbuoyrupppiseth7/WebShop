@@ -43,13 +43,22 @@
 	$getSPrdBrandname = get('SPrdBrandname');
 	$getPrdBranchCode = get('PrdBranchCode');
 	$getUserID = get('UserID');
-	$isStock = get('isStock');
 	
 	// Call Date Location
 	date_default_timezone_set('Asia/Bangkok');
 	$date_now = date("Y-m-d H:i:s");
 	$date = date("Y-m-d");
 	$datetomorow = date("Y-m-d" ,date(strtotime("+1 day", strtotime($date))));
+	
+	/*$db->disconnect();
+	$db->connect();*/
+	
+	$cboPrdCate1 = get('cboPrdCate1');
+	$txtprdname1 = get('txtprdname1');
+	$txtcode1 = get('txtcode1');
+	$txtbuyprice1 = get('txtbuyprice1');
+	$txtsaleprice1 = get('txtsaleprice1');
+	
 ?>
 <!DOCTYPE html>
 <html>
@@ -109,12 +118,14 @@
 			<!--Ex: <INPUT  onkeypress="return isNumberKey(event)" type="text">-->
 		</script>
         
-   <script>
-     function goBack() {
-     window.history.back()
-     }
-   </script>
-     
-       
+		   <script type="text/javascript">
+             function goBack() {
+             window.history.back()
+             }
+			 
+			 
+           </script>
+     	<script src="js/shorttable.js"></script>
+       <link rel="stylesheet" type="text/css" href="./jquery.datetimepicker.css"/>
         
     </head>

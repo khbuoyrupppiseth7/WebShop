@@ -10,11 +10,17 @@
 		$txtSalePrice = post('txtSalePrice');
 		$txtOtherCost = post('txtOtherCost');
 		
-		$Updatestock=$db->query("UPDATE tblproductsbranch SET BuyPrice = N'".$txtBuyPrice."',OtherCost=N'".$txtOtherCost."', SalePrice = N'".$txtSalePrice."' WHERE ProductID = '".$getPrdBranchID."';");
-		$UpdateProductsName=$db->query("UPDATE tblproducts SET ProductName=N'".$txtName."', ProductCode=N'".$txtCode."' WHERE ProductID = '".$getPrdBranchID."';");
-		if($Updatestock){
+		$UpdateSaleprice=$db->query("UPDATE tbl_customerorderdetail SET SalePrice = ".$txtSalePrice." 
+									WHERE ProductID = '".$getPrdBranchID."';");
+									
+		$UpdateBuyPrice=$db->query("UPDATE tblproducts_buydetail SET BuyPrice=".$txtBuyPrice."
+WHERE ProductID = '".$getPrdBranchID."'");
+		
+		
+		$UpdateProductsName=$db->query("UPDATE tblproducts SET ProductName=N'".$txtName."' WHERE ProductID = '".$getPrdBranchID."';");
+		if($UpdateProductsName){
 			
-			cRedirect('frmtotalproducts.php?BranchID='.$getSPrdBrandID.'&sarchprd='.$getSPrdBrandname.'&btnSearch=true');
+			cRedirect('Report_Saling.php');
 			
 		}
 	}
@@ -55,12 +61,12 @@
                                             <th>Code</th>
                                             <th>BuyPrice</th>
                                             <th>SalePrice</th>
-                                            <th>Other Price</th>
+                                           
                                             <th class="">Action</th>  
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <form role="form" method="post">
+                                    <form role="form" method="post" enctype="multipart/form-data">
                                         <?php
 											
 											echo'<tr class="even">
@@ -68,7 +74,7 @@
 														<td><input name="txtCode" value="'.$getPrdBranchCode.'" class="form-control" placeholder="Enter text" /></td>
 														<td><input name="txtBuyPrice" onkeypress="return isNumberKey(event)" value="'.$getBuyprice.'" class="form-control" placeholder="Enter text" /></td>
 														<td><input name="txtSalePrice" onkeypress="return isNumberKey(event)" value="'.$getPrdBranchPrice.'" class="form-control" placeholder="Enter text" /></td>
-														<td><input name="txtOtherCost" onkeypress="return isNumberKey(event)" value="'.$getothecost.'" class="form-control" placeholder="Enter text" /></td>
+														
 														<td class="center">
 														
 														<input type="submit" name="btnSave" class="btn btn-primary" value="Save" />

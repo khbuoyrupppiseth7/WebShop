@@ -258,7 +258,7 @@ CREATE TABLE `tbl_customerorderdetail` (
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `spCompanyInsert`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spCompanyInsert`( 
+CREATE  PROCEDURE `spCompanyInsert`( 
 IN 
 _ComID NVARCHAR(500),
 _ComName NVARCHAR(500),
@@ -314,7 +314,7 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `spSearchPrdBuy`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spSearchPrdBuy`( 
+CREATE   PROCEDURE `spSearchPrdBuy`( 
 IN _SearchPrdBuy NVARCHAR(500) )
 BEGIN
 	IF(_SearchPrdBuy) is NULL THEN
@@ -348,7 +348,6 @@ BEGIN
 			OR tblproducts.ProductCode LIKE CONCAT(N'%' , _SearchPrdBuy , '%');
 	END IF;
 	
-
 END
 ;;
 DELIMITER ;
@@ -358,7 +357,7 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `spSearchPrdBuyHistory`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spSearchPrdBuyHistory`(IN _SearchPrdSale NVARCHAR(500), IN _SearchPrdBranch NVARCHAR(500))
+CREATE   PROCEDURE `spSearchPrdBuyHistory`(IN _SearchPrdSale NVARCHAR(500), IN _SearchPrdBranch NVARCHAR(500))
 BEGIN
 	IF(_SearchPrdSale ) is NULL THEN
 		SELECT 
@@ -406,7 +405,7 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `spSearchPrdSale`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spSearchPrdSale`(IN _SearchPrdSale NVARCHAR(500), IN _SearchPrdBranch NVARCHAR(500))
+CREATE   PROCEDURE `spSearchPrdSale`(IN _SearchPrdSale NVARCHAR(500), IN _SearchPrdBranch NVARCHAR(500))
 BEGIN
 	IF(_SearchPrdSale ) is NULL THEN
 		SELECT 
@@ -454,7 +453,7 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `spTestingSellingQty`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spTestingSellingQty`( 
+CREATE   PROCEDURE `spTestingSellingQty`( 
 IN _SearchPrdBuy NVARCHAR(500) )
 BEGIN
 
@@ -484,7 +483,7 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `spUserAccClearData`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spUserAccClearData`(_UserName NVARCHAR(500),
+CREATE   PROCEDURE `spUserAccClearData`(_UserName NVARCHAR(500),
 _UserPwd NVARCHAR(500))
 BEGIN
  
@@ -511,7 +510,7 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `spUserAccSelete`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spUserAccSelete`(_UserName NVARCHAR(500),
+CREATE   PROCEDURE `spUserAccSelete`(_UserName NVARCHAR(500),
 _UserPwd NVARCHAR(500))
 BEGIN
  
@@ -537,7 +536,7 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `sp_Branch_Delete`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Branch_Delete`(IN  _BranchID NVARCHAR(50))
+CREATE   PROCEDURE `sp_Branch_Delete`(IN  _BranchID NVARCHAR(50))
 BEGIN
 	DELETE From tblbranch 
 	WHERE BranchID=_BranchID;
@@ -550,7 +549,7 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `sp_Branch_Select`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Branch_Select`(IN  _Search NVARCHAR(50))
+CREATE   PROCEDURE `sp_Branch_Select`(IN  _Search NVARCHAR(50))
 BEGIN
 
 IF (_Search="") THEN
@@ -578,7 +577,7 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `sp_Branch_Update`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Branch_Update`(IN  _BranchID NVARCHAR(50),_BranchName NVARCHAR(100),_Decription NVARCHAR(250))
+CREATE   PROCEDURE `sp_Branch_Update`(IN  _BranchID NVARCHAR(50),_BranchName NVARCHAR(100),_Decription NVARCHAR(250))
 BEGIN
 	UPDATE tblbranch SET
 			BranchName=_BranchName,
@@ -593,7 +592,7 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `sp_Category_Delete`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Category_Delete`(IN  _ProductCategoryID NVARCHAR(50))
+CREATE   PROCEDURE `sp_Category_Delete`(IN  _ProductCategoryID NVARCHAR(50))
 BEGIN
 	DELETE From tblproductcategory
 	WHERE ProductCategoryID=_ProductCategoryID;
@@ -606,7 +605,7 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `sp_Category_Select`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Category_Select`(IN  _Search NVARCHAR(200))
+CREATE   PROCEDURE `sp_Category_Select`(IN  _Search NVARCHAR(200))
 BEGIN
 
 IF (_Search="") THEN
@@ -632,7 +631,7 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `sp_Category_Update`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Category_Update`(IN  _ProductCategoryID NVARCHAR(50),_ProductCategoryName NVARCHAR(100),_Decription NVARCHAR(250))
+CREATE   PROCEDURE `sp_Category_Update`(IN  _ProductCategoryID NVARCHAR(50),_ProductCategoryName NVARCHAR(100),_Decription NVARCHAR(250))
 BEGIN
 	UPDATE tblproductcategory SET
 			ProductCategoryName=_ProductCategoryName,
@@ -647,7 +646,7 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `sp_Insert_Branch`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Insert_Branch`(IN 
+CREATE   PROCEDURE `sp_Insert_Branch`(IN 
 _BranchID NVARCHAR(50),
 _BranchName NVARCHAR(100),
 _Decription NVARCHAR(500))
@@ -675,7 +674,7 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `sp_Insert_Category`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Insert_Category`(IN  _ProductCategoryID NVARCHAR(50),_ProductCategoryName NVARCHAR(100),_Decription NVARCHAR(250))
+CREATE   PROCEDURE `sp_Insert_Category`(IN  _ProductCategoryID NVARCHAR(50),_ProductCategoryName NVARCHAR(100),_Decription NVARCHAR(250))
 BEGIN
 
 INSERT INTO tblproductcategory(
@@ -699,7 +698,7 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `sp_Insert_UserAccount`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Insert_UserAccount`(IN  _UserID  NVARCHAR(100),_BranchID  NVARCHAR(50),_UserName  NVARCHAR(100),_Password  NVARCHAR(100), _Level int,_Decription NVARCHAR(500),_Status int)
+CREATE   PROCEDURE `sp_Insert_UserAccount`(IN  _UserID  NVARCHAR(100),_BranchID  NVARCHAR(50),_UserName  NVARCHAR(100),_Password  NVARCHAR(100), _Level int,_Decription NVARCHAR(500),_Status int)
 BEGIN
 
 INSERT INTO tblusers(
@@ -731,7 +730,7 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `sp_UserAccount_Delete`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_UserAccount_Delete`(IN  _UserID  NVARCHAR(100))
+CREATE   PROCEDURE `sp_UserAccount_Delete`(IN  _UserID  NVARCHAR(100))
 BEGIN
 	DELETE From tblusers 
   WHERE UserID=_UserID;
@@ -744,7 +743,7 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `sp_UserAccount_Select`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_UserAccount_Select`(IN  _Search NVARCHAR(100))
+CREATE   PROCEDURE `sp_UserAccount_Select`(IN  _Search NVARCHAR(100))
 BEGIN
 
 IF (_Search="") THEN
@@ -778,7 +777,7 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `sp_UserAccount_Select_By_ID`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_UserAccount_Select_By_ID`(IN  _BranchID NVARCHAR(100))
+CREATE   PROCEDURE `sp_UserAccount_Select_By_ID`(IN  _BranchID NVARCHAR(100))
 BEGIN
 
 	SELECT 	
@@ -800,7 +799,7 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `sp_UserAccount_Update`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_UserAccount_Update`(IN  _UserID  NVARCHAR(100),_BranchID  NVARCHAR(50),_UserName  NVARCHAR(100), _Level int,_Decription NVARCHAR(500),_Status int)
+CREATE   PROCEDURE `sp_UserAccount_Update`(IN  _UserID  NVARCHAR(100),_BranchID  NVARCHAR(50),_UserName  NVARCHAR(100), _Level int,_Decription NVARCHAR(500),_Status int)
 BEGIN
 	UPDATE tblusers SET
 			BranchID =_BranchID,
@@ -818,7 +817,7 @@ DELIMITER ;
 -- ----------------------------
 DROP FUNCTION IF EXISTS `IncomeLevel`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `IncomeLevel`( monthly_value INT ) RETURNS varchar(20) CHARSET utf8
+CREATE   FUNCTION `IncomeLevel`( monthly_value INT ) RETURNS varchar(20) CHARSET utf8
 BEGIN
 
    DECLARE income_level varchar(20);
@@ -845,7 +844,7 @@ DELIMITER ;
 -- ----------------------------
 DROP FUNCTION IF EXISTS `PageCount`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `PageCount`( value INT ) RETURNS varchar(10) CHARSET utf8
+CREATE   FUNCTION `PageCount`( value INT ) RETURNS varchar(10) CHARSET utf8
     DETERMINISTIC
 BEGIN
 

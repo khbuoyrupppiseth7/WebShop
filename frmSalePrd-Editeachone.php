@@ -22,19 +22,6 @@
 		$error = "Error Internet Connection!";
 		
 		}
-		
-		
-	if(isset($_POST['btnDeletePrd'])){	
-		$deleted =$db->query("DELETE FROM `tblprdsaletem` WHERE ProductID = '".$getProductID."' AND IP = '".$ip."'
-							");
-			
-			if($deleted){
-				cRedirect('frmSalePrd.php');
-			}
-		
-		$error = "Error Internet Connection!";
-		
-		}
 	
 ?>
 
@@ -103,8 +90,9 @@ WHERE IP = '".$ip."' AND ProductID = '".$getProductID."'");
 														
 														<td class="center"><input name="txtSalePrice" onkeypress="return isNumberKey(event)" value="'.$SalePrice.'" class="form-control" placeholder="Enter text" /></td> 
 														<td class="center">
-															<input type="submit" name="btnAddNewPrd" class="btn btn-primary" value="Save" />
-															<input type="submit" name="btnDeletePrd" class="btn btn-danger" value="Delete" />
+														
+														<input type="submit" name="btnAddNewPrd" class="btn btn-primary" value="Save" />
+
 														</td>
 													</tr>';
 													
