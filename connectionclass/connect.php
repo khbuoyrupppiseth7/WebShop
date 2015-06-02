@@ -1,9 +1,9 @@
 <?php
 class MyConnection
 {
-		private $host = '174.136.57.160';
+    	private $host = '174.136.57.160';
 		private $username = 'www7tech_Pro';
-		private $database = 'www7tech_WebShopDB';
+		private $database = 'www7tech_WebRentDB';
 		private $mylink;
 		private $sql;
 		private $result;
@@ -26,14 +26,6 @@ class MyConnection
 		private $sql;
 		private $result;
 		private $password = 'QNUbK$gT$d^y';
-		
-		private $host = '174.136.57.160';
-		private $username = 'www7tech_Pro';
-		private $database = 'www7tech_WebShopDB';
-		private $mylink;
-		private $sql;
-		private $result;
-		private $password = 'piseth123';
 		
 		*/
 		
