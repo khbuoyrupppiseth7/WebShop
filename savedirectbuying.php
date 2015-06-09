@@ -28,8 +28,8 @@ VALUES('".$buyid."','".$date_now."','".$U_id."','');");
 	$insertTotblProducts=$db->query("INSERT INTO tblproducts(ProductID, ProductName, ProductCategoryID, ProductCode, Qty, BuyPrice, SalePrice, Decription)
 							VALUES( '".$PrdID."', '".$txtprdname1."','".$cboPrdCate1."','".$txtcode1."',1,".$txtbuyprice1.",".$txtsaleprice1.",'Desc');");
 
-	$inserttobuyBranch=$db->query("INSERT INTO tblproductsbranch (ProductID, BranchID, BuyPrice, OtherCost, SalePrice, Qty)
-							VALUES ('".$PrdID."', '".$U_Brandid."',".$txtbuyprice1.",0 , ".$txtsaleprice1.", 1)");
+	$inserttobuyBranch=$db->query("INSERT INTO tblproductsbranch (ProductID, BranchID, BuyPrice, OtherCost, SalePrice, Qty, Decription)
+							VALUES ('".$PrdID."', '".$U_Brandid."',".$txtbuyprice1.",".$txtOtherCost." , ".$txtsaleprice1.", 1, N'".$txtDesc."')");
 	$InsertTotblBuy= $db->query("INSERT INTO tblproducts_buy (BuyID, BuyDate, UserID, Decription) 
 VALUES('".$buyid."','".$date_now."','".$U_id."','');");	
 	

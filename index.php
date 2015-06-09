@@ -105,6 +105,46 @@
                 </section>
 
                 <!-- Main content -->
+                <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Other Cost</h4>
+              </div>
+              <div class="modal-body">
+                	<form enctype="multipart/form-data" action="savedirectOtherCost.php">
+                          
+                          <input type="hidden" name="txtProductID" id="ProductID">
+                          
+                          <div class="form-group">
+                            	<label>Other Cost: </label>
+                                
+                                <div class="input-group">
+                                  <div class="input-group-addon">$</div>
+                                  <input name="txtOtherCost" class="form-control" id="txtOtherCostdollar" onKeyUp="ChangeOtherCostDolar()" placeholder="Enter Cost($)" required autofocus />
+                                </div>
+                                <div class="input-group">
+                                  <div class="input-group-addon">KH</div>
+                                  <input name="txtprdname" class="form-control" id="txtOtherCostreal" onKeyUp="ChangeOtherCostReal()" placeholder="Enter Cost(R)"  autofocus />
+                                </div>
+                          </div>
+                          
+                          <div class="form-group">
+                            	<label>Description: </label>
+                                <textarea class="form-control" id="txtDesc" name="txtDesc" placeholder="Enter Descriptiion" rows="3"></textarea>
+                          </div>
+                     
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" value="Save" />
+                          </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+        
                
                  <div class="panel-body">
                             <div class="dataTable_wrapper">
@@ -130,10 +170,20 @@
                                                    ?>
                                                     </select>
                                             </th>
-                                            <th><input name="txtprdname1" class="form-control" placeholder="Enter Product Name" required autofocus /></th>
-                                            <th><input name="txtcode1" class="form-control" placeholder="Enter Code" required /></th>
-                                            <th><input type="text" name="txtbuyprice1" placeholder="Enter Price" onKeyPress="return isNumberKey(event)" required class="form-control currency"  /></th>
-                                            <th><input type="text"  name="txtsaleprice1" placeholder="Enter Sale Price" required onKeyPress="return isNumberKey(event)"  class="form-control currency"  /></th>  
+                                            <th><input name="txtprdname1" class="form-control" placeholder="Enter Product Name" required autofocus />
+                                            	<input name="txtcode1" class="form-control" placeholder="Enter Product Code" required />
+                                            </th>
+                                            
+                                            <th><input type="text" name="txtbuyprice1" placeholder="Buy Price ($)" id="dolarbuying" onKeyUp="ChangetoKhmerbuying()"  onKeyPress="return isNumberKey(event)" required class="form-control currency"  />
+                                            <input type="text" name="txtbuypricekh" placeholder="Buy Price (R)" id="khmerbuying" onKeyUp="ChangetoDolarbuying()" onKeyPress="return isNumberKey(event)" required class="form-control currency"  />
+                                            </th>
+                                            <th><input type="text"  name="txtsaleprice1" placeholder="Sale Price ($)"  id="dolarSalling" onKeyUp="ChangetoKhmerSalling()" required onKeyPress="return isNumberKey(event)"  class="form-control currency"  />
+                                            <input type="text"  name="txtsalepricekh" placeholder="Sale Price (R)" id="khmerSalling" onKeyUp="ChangetoDollaSalling()" onKeyPress="return isNumberKey(event)"  class="form-control currency"  />
+                                            </th>
+                                            <th>
+                                            <input type="text"  name="txtOtherCost" placeholder="Other Cost($)" required  onKeyPress="return isNumberKey(event)"  class="form-control currency"  />
+                                            <input type="text"  name="txtDesc" placeholder="Description"  class="form-control currency"  />
+                                            </th> 
                                            
                                           	<th><input type="submit" name="btnSaveDirect" class="btn btn-primary" value="Save" /></th>  
                                         	</form>
@@ -148,7 +198,8 @@
                                             <th>Name </th>
                                             <th>Code</th>
                                             <th>BuyPrice</th>
-                                            <th>SalePrice</th>  
+                                            <th>SalePrice</th> 
+                                            <th>OtherCost</th> 
                                           
                                         </tr>
                                     </thead>
@@ -171,17 +222,26 @@
 												$Qty = $row->Qty;
 												$BuyPrice = $row->BuyPrice;
 												$SalePrice = $row->SalePrice;
+												$OtherCost = $row->OtherCost;
+												$Decription = $row->Decription;
 												$x = $i++;
 												echo'<tr class="even">
 														<td>'.$ProductCategoryName.'</td>
 														<td>'.$ProductName.'</td>
 														<td>'.$ProductCode.'</td>
 														<td class="center"> $'.$BuyPrice.'</td>
-														<td class="center" onClick="$("#Order").modal("show")>';
+														<td class="center" >';
 														
-														echo "<input type=\"button\" onclick=\"myfunction('".$ProductID."','".$ProductName."','".$ProductCategoryID."','".$ProductCode."','1','".$BuyPrice."','".$SalePrice."')\" value=\"$ ".$SalePrice."\" />";
+														echo "<input type=\"button\" onclick=\"myfunction('".$ProductID."','".$ProductName."','".$ProductCategoryID."','".$ProductCode."','1','".$BuyPrice."','".$SalePrice."','".$OtherCost."','".$Decription."')\" value=\"$ ".$SalePrice."\" />";
+														echo '</td>';
 														
-												echo '</td>
+														echo '<td class="center"> $';
+														echo "<a onclick=\"myOtherCost('".$ProductID."','".$OtherCost."','".$Decription."')\">".$OtherCost;
+														echo '</a>
+														
+														</td>
+														
+														
 												
 													</tr>';
 													
@@ -206,7 +266,6 @@
                       </div>
                         <!-- /.panel-body -->
                <!-- New User -->
-               
                <div class="modal fade" id="Order" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog">                    
                   <div class="modal-content">
@@ -218,7 +277,7 @@
                       <div class="modal-body">
                         <form enctype="multipart/form-data" action="savedirectsalling.php">
                           
-                          <input type="hidden" name="txtProductID" id="ProductID">
+                          <input type="hidden" name="txtProductID" id="ProductIDSale">
                           <input type="hidden" name="txtProductCategoryID" id="ProductCategoryID">
                           <input type="hidden" name="txtProductCode" id="ProductCode">
                           <input type="hidden" name="txtQty" value="1">
@@ -236,11 +295,35 @@
                           </div>
                           <div class="form-group">
                                 <label>Sale Price:</label>
-                                <div class="input-group"> 
-                                <span class="input-group-addon">Price</span>
-                                <input type="text"  name="txtsaleprice" onKeyUp="ChangetoKhmer()" id="dolar" onKeyPress="return isNumberKey(event)"   class="form-control " />
-                                <input type="text" name="txtsaleprice1" onKeyUp="ChangetoDolar()" id="khmer" onKeyPress="return isNumberKey(event)"  class="form-control "  />
-                            	</div>
+                                
+                                <div class="input-group">
+                                  <div class="input-group-addon">$</div>
+                                  <input type="text"  name="txtsaleprice" onKeyUp="ChangetoKhmer()" id="dolar" onKeyPress="return isNumberKey(event)"   class="form-control " />
+                                </div>
+                                <div class="input-group">
+                                  <div class="input-group-addon">KH</div>
+                                   <input type="text" name="txtsaleprice1" onKeyUp="ChangetoDolar()" id="khmer" onKeyPress="return isNumberKey(event)"  class="form-control "  />
+                                </div>
+                                
+                                
+                          </div>
+                          
+                          <div class="form-group">
+                            	<label>Other Cost: </label>
+                                
+                                <div class="input-group">
+                                  <div class="input-group-addon">$</div>
+                                  <input name="txtOtherCost" class="form-control" id="txtOtherCostdollarSale" onKeyUp="ChangeOtherCostDolarSale()" placeholder="Enter Cost($)" required autofocus />
+                                </div>
+                                <div class="input-group">
+                                  <div class="input-group-addon">KH</div>
+                                  <input name="txtOtherCost1" class="form-control" id="txtOtherCostrealSale" onKeyUp="ChangeOtherCostRealSale()" placeholder="Enter Cost(R)"  autofocus />
+                                </div>
+                          </div>
+                          
+                          <div class="form-group">
+                            	<label>Description: </label>
+                                <textarea class="form-control" id="txtDescSale" name="txtDesc" placeholder="Enter Descriptiion" rows="3"></textarea>
                           </div>
                           
                      
@@ -255,7 +338,7 @@
                   </div>
                 </div>
                 <!-- End New User -->
-                
+                    
                 <script type="text/javascript">				
 				
 					  		var dolar = document.getElementById("dolar");
@@ -265,24 +348,146 @@
 							var txtProductID = document.getElementById("ProductID");
 							var txtProductCategoryID = document.getElementById("ProductCategoryID");
 							var txtProductCode = document.getElementById("ProductCode");
+							var txtdolarbuying = document.getElementById("dolarbuying");
+							var txtkhmerbuying = document.getElementById("khmerbuying");
 							
-							//'".$ProductID."','".$ProductName."','".$ProductCategoryID."','".$ProductCode."','1','".$BuyPrice."','".$SalePrice."'
+							var txtkhmerSalling = document.getElementById("khmerSalling");
+							var txtdolarSalling = document.getElementById("dolarSalling");
 							
-							function myfunction(getProductID,getProductName,getProductCategoryID,getProductCode,getQty, getBuyPrice, getSalePrice)
+							var txtDesc = document.getElementById("txtDesc");
+							var txtOtherCostdollar = document.getElementById("txtOtherCostdollar");
+							var txtOtherCostreal = document.getElementById("txtOtherCostreal");
+							var ProductIDSale = document.getElementById("ProductIDSale");
+							
+							var txtDescSale = document.getElementById("txtDescSale");
+							var txtOtherCostdollarSale = document.getElementById("txtOtherCostdollarSale");
+							var txtOtherCostrealSale = document.getElementById("txtOtherCostrealSale");
+							
+							//myOtherCost
+							function myOtherCost(getProductID,getOtherCost,getDecription)
+							{
+								$('.bs-example-modal-sm').modal('show');
+								txtProductID.value = getProductID;
+								txtOtherCostdollar.value = getOtherCost;
+								txtDesc.value = getDecription;
+								txtOtherCostreal.value = parseFloat(txtOtherCostdollar.value) * 40 ;
+							}
+							
+							function ChangeOtherCostDolar() {
+								if(txtOtherCostdollar.value == '')
+								{
+									txtOtherCostreal.value = 0;
+								}
+								else
+								{
+									txtOtherCostreal.value = parseFloat(txtOtherCostdollar.value) * 40 ;
+								}
+							}
+							
+							
+							function ChangeOtherCostReal() {
+								if(txtOtherCostreal.value == '')
+								{
+									txtOtherCostdollar.value = 0;
+								}
+								else
+								{
+									txtOtherCostdollar.value = parseFloat(txtOtherCostreal.value) / 40 ;
+								}
+							}
+							
+							
+							/*-----------------------------------------------------------------------------------------*/
+							// Create Function to get Value for Sale Products
+							//'".$OtherCost."','".$Decription."'
+							function myfunction(getProductID,getProductName,getProductCategoryID,getProductCode,getQty, getBuyPrice, getSalePrice, getOtherCost, getDecription)
 							{
 								$('#Order').modal('show');
 								//alert(getProductID + getProductID + getProductCategoryID + getQty)
+								ProductIDSale.value = getProductID;
 								txtPrdName.value = getProductName;
 								txtbuyprice.value = getBuyPrice;
 								dolar.value = getSalePrice;
-								txtProductID.value = getProductID;
+								
 								txtProductCategoryID.value = getProductCategoryID;
 								txtProductCode.value = getProductCode;
+								txtOtherCostdollarSale.value = getOtherCost;
+								txtDescSale.value = getDecription;
 								
-								
+								txtOtherCostrealSale.value = parseFloat(txtOtherCostdollarSale.value) * 40;
 								khmer.value = parseFloat(dolar.value) * 40 ;
 							}
-										
+							
+							// Change Form Other Cost Dollar
+							function ChangeOtherCostDolarSale() {
+								if(txtOtherCostdollarSale.value == '')
+								{
+									txtOtherCostrealSale.value = 0;
+								}
+								else
+								{
+									txtOtherCostrealSale.value = parseFloat(txtOtherCostdollarSale.value) * 40 ;
+								}
+							}
+							
+							// Change Form Other Cost Real
+							function ChangeOtherCostRealSale() {
+								if(txtOtherCostrealSale.value == '')
+								{
+									txtOtherCostdollarSale.value = 0;
+								}
+								else
+								{
+									txtOtherCostdollarSale.value = parseFloat(txtOtherCostrealSale.value) / 40 ;
+								}
+							}
+							
+							// Change Form Khmer to Dolar Salling
+							function ChangetoDollaSalling() {
+								if(txtkhmerSalling.value == '')
+								{
+									txtdolarSalling.value = 0;
+								}
+								else
+								{
+									txtdolarSalling.value = parseFloat(txtkhmerSalling.value) / 40 ;
+								}
+							}
+							
+							// Change Form Dolar to Khmer Salling
+							function ChangetoKhmerSalling() {
+								if(txtdolarSalling.value == '')
+								{
+									txtkhmerSalling.value = 0;
+								}
+								else
+								{
+									txtkhmerSalling.value = parseFloat(txtdolarSalling.value) * 40 ;
+								}
+							}
+							
+							// Change Form Khmer to Dolar Buying
+							function ChangetoDolarbuying() {
+								if(txtkhmerbuying.value == '')
+								{
+									txtdolarbuying.value = 0;
+								}
+								else
+								{
+									txtdolarbuying.value = parseFloat(txtkhmerbuying.value) / 40 ;
+								}
+							}
+							// Change Form Dolar to Khmer Buying
+							function ChangetoKhmerbuying() {
+								if(txtdolarbuying.value == '')
+								{
+									txtkhmerbuying.value = 0;
+								}
+								else
+								{
+									txtkhmerbuying.value = parseFloat(txtdolarbuying.value) * 40 ;
+								}
+							}			
 							function ChangetoKhmer() {
 									
 									if(dolar.value == '')
@@ -315,6 +520,6 @@
                 
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
-
+        
         <!-- add new calendar event modal -->
 <?php include 'footer.php';?>

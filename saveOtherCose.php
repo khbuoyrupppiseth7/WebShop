@@ -6,12 +6,14 @@
 	$txtDesc = get('txtDesc');
 	
 		/*Create Invoice Customer Sale*/
-		$InsertToCustomerOrder=$db->query(" UPDATE tbl_customerorderdetail SET 
+		$InsertToCustomerOrder=$db->query(" UPDATE tblproductsbranch SET 
 		OtherCost='".$txtsaleprice."', 
 		Decription='".$txtDesc."'
-		WHERE CustomerOrderDetailID = '".$txtCustomerOrderDetailID."'");
+		WHERE ProductID = '".$txtCustomerOrderDetailID."'");
+		
+		//UPDATE tblproductsbranch SET OtherCost = '".$txtOtherCost."', Decription=N'".$txtDesc."' WHERE ProductID = '".$ProductID."'
 		
 		if($InsertToCustomerOrder){
-				cRedirect('Report_Saling.php');
+			cRedirect('Report_Saling.php');
 		 }								
 ?>

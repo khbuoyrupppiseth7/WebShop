@@ -59,6 +59,11 @@
 	$txtbuyprice1 = get('txtbuyprice1');
 	$txtsaleprice1 = get('txtsaleprice1');
 	
+	$txtOtherCost = get('txtOtherCost');
+	$txtDesc = get('txtDesc');
+	
+	$gettxtuser = get('txtuser');
+	
 ?>
 <!DOCTYPE html>
 <html>

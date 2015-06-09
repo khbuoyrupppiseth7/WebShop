@@ -133,7 +133,47 @@ VALUES('".$buyid."',Now(),'".$U_id."','');");
                              </div>
                            </a> 
                          <form class="form-inline">
-                         <div class="col-md-7 pull-right">
+                         <div class="col-md-8 pull-right" >
+                          <div class="form-group">
+                           
+                            <select class="form-control" name="txtuser">
+                            <?php
+								if($_SESSION['Level']=='1')
+								{
+									$seUser=$db->query("SELECT UserID, BranchID, UserName FROM tblusers WHERE `Status` = 1");
+								}
+								else
+								{
+									$seUser=$db->query("SELECT UserID, BranchID, UserName FROM tblusers WHERE `Status` = 1 AND UserID = '".$U_id."'");
+								}	
+								
+								//$seUser=$db->query("SELECT UserID, BranchID, UserName FROM tblusers WHERE `Status` = 1");
+								$rUser=$db->dbCountRows($seUser);
+								if($rUser>0){
+									$i = 1;
+									
+									while($row=$db->fetch($seUser)){
+										$UserID = $row->UserID;
+										$BranchID = $row->BranchID;
+										$UserName = $row->UserName;
+										
+										
+										if($UserID == $gettxtuser)
+										{
+											echo '<option value="'.$UserID.'" selected="selected">'.$UserName.'</option>';
+										}
+									
+										else
+										{
+											echo '<option value="'.$UserID.'" >'.$UserName.'</option>';
+											
+										}
+									}
+								}
+							?>
+                              
+                            </select>
+                          </div>
                           <div class="form-group">
                            
                             <input type="text" class="form-control some_class" <?php 
@@ -201,6 +241,9 @@ VALUES('".$buyid."',Now(),'".$U_id."','');");
                                         </tr>
                                     </thead>
                                     <tbody>';
+									if($gettxtuser == '1')
+									{
+									// Show product detail that has been sold
                                       	$select=$db->query("SELECT 
 														tblproductcategory.ProductCategoryName,
 														tblproducts.ProductName,
@@ -209,8 +252,8 @@ VALUES('".$buyid."',Now(),'".$U_id."','');");
 														tblproducts_buy.BuyDate,
 														COALESCE((tbl_customerorderdetail.SalePrice),0) AS SalePrice,
 														DATE_FORMAT( tbl_customerorder.CustomerOrderDate,'%d %b %Y %h:%m:%s') as SaleDate,
-														COALESCE((tbl_customerorderdetail.OtherCost),0) AS OtherCost,
-														COALESCE((tbl_customerorderdetail.SalePrice),0)-COALESCE((tblproducts_buydetail.BuyPrice),0)-COALESCE((tbl_customerorderdetail.OtherCost),0) AS Income,
+														COALESCE((tblproductsbranch.OtherCost),0) AS OtherCost,
+														COALESCE((tbl_customerorderdetail.SalePrice),0)-COALESCE((tblproducts_buydetail.BuyPrice),0)-COALESCE((tblproductsbranch.OtherCost),0) AS Income,
 														tbl_customerorder.CustomerOrderID, 
 														tbl_customerorderdetail.CustomerOrderDetailID,
 														tbl_customerorder.InvoiceNo,
@@ -224,7 +267,7 @@ VALUES('".$buyid."',Now(),'".$U_id."','');");
 														tbl_customerorder.UserID,
 														tbl_customerorder.SelltoOtherBranch,
 														tblbranch.BranchName,
-														tbl_customerorderdetail.Decription
+														tblproductsbranch.Decription
 														FROM tbl_customerorder
 													INNER JOIN tbl_customerorderdetail
 														ON tbl_customerorder.CustomerOrderID = tbl_customerorderdetail.CustomerOrderID
@@ -238,10 +281,229 @@ VALUES('".$buyid."',Now(),'".$U_id."','');");
 														ON tblproducts.ProductID = tblproducts_buydetail.ProductID
 													INNER JOIN tblproducts_buy 
 														ON tblproducts_buy.BuyID = tblproducts_buydetail.BuyID
+													INNER JOIN tblproductsbranch
+														ON tblproducts.ProductID = tblproductsbranch.ProductID
 											WHERE (tblproducts.ProductName LIKE '%".$sarchprd."%' OR tblproducts.ProductCode LIKE '%".$sarchprd."%' )
-											AND (tbl_customerorder.CustomerOrderDate BETWEEN '".$txtFrom."' AND '".$txtTo."')
-											AND tbl_customerorder.UserID = '".$U_id."'
+											AND (tbl_customerorder.CustomerOrderDate BETWEEN '".$txtFrom."' AND '".$txtTo."') 
+											
 											ORDER BY tbl_customerorder.CustomerOrderDate DESC");
+									// Product detail that hasn't sell
+									$select4=$db->query("SELECT tblproductsbranch.ProductID,
+																			tblproductcategory.ProductCategoryName,
+																			tblproducts.ProductName,
+																			tblproducts.ProductCode,
+																			tblproductsbranch.BuyPrice,
+																			tblproducts_buy.BuyDate,
+																			tblproductsbranch.OtherCost, 
+																			tblproductsbranch.SalePrice,
+																			tblproductsbranch.Qty,
+																			tblproductsbranch.Decription
+																		 FROM tblproductsbranch
+																		INNER JOIN tblproducts_buydetail
+																		ON tblproducts_buydetail.ProductID = tblproductsbranch.ProductID
+																		INNER JOIN tblproducts_buy
+																		ON tblproducts_buy.BuyID = tblproducts_buydetail.BuyID
+																		INNER JOIN tblproducts
+																		ON tblproducts.ProductID = tblproductsbranch.ProductID
+																		INNER JOIN tblproductcategory
+																		ON tblproductcategory.ProductCategoryID = tblproducts.ProductCategoryID
+																		WHERE tblproducts_buy.BuyDate BETWEEN '".$txtFrom."' AND '".$txtTo."'
+																		AND tblproductsbranch.Qty = 1
+																		
+															");
+									
+									// Show Product doesn't sell				
+									$select3=$db->query("SELECT tblproductsbranch.ProductID, 
+																			tblproductsbranch.BuyPrice, 
+																			tblproductsbranch.OtherCost, 
+																			tblproductsbranch.SalePrice,
+																			tblproductsbranch.Qty,
+																			tblproductsbranch.Decription
+																		 FROM tblproductsbranch
+																		INNER JOIN tblproducts_buydetail
+																		ON tblproducts_buydetail.ProductID = tblproductsbranch.ProductID
+																		INNER JOIN tblproducts_buy
+																		ON tblproducts_buy.BuyID = tblproducts_buydetail.BuyID
+																		WHERE tblproducts_buy.BuyDate BETWEEN '".$txtFrom."' AND '".$txtTo."'
+																		AND tblproductsbranch.Qty = 1
+																		
+															");
+									// Show Product  sell					
+									$select2=$db->query("SELECT tblproductsbranch.ProductID, 
+																			tblproductsbranch.BuyPrice, 
+																			tblproductsbranch.OtherCost, 
+																			tblproductsbranch.SalePrice,
+																			tblproductsbranch.Qty,
+																			tblproductsbranch.Decription
+																		 FROM tblproductsbranch
+																		INNER JOIN tblproducts_buydetail
+																		ON tblproducts_buydetail.ProductID = tblproductsbranch.ProductID
+																		INNER JOIN tblproducts_buy
+																		ON tblproducts_buy.BuyID = tblproducts_buydetail.BuyID
+																			INNER JOIN tbl_customerorderdetail
+																			ON tbl_customerorderdetail.ProductID = tblproductsbranch.ProductID
+																			INNER JOIN tbl_customerorder
+																			ON tbl_customerorderdetail.CustomerOrderID = tbl_customerorder.CustomerOrderID
+																		WHERE tbl_customerorder.CustomerOrderDate BETWEEN '".$txtFrom."' AND '".$txtTo."'
+																		AND tblproductsbranch.Qty = 0
+																	
+															");
+									
+									// Total Income
+									$select1=$db->query("SELECT 
+COALESCE((tbl_customerorderdetail.SalePrice),0)-(COALESCE((tblproducts_buydetail.BuyPrice),0)+COALESCE((tblproductsbranch.OtherCost),0)) AS totalIncome		
+																	FROM tbl_customerorder
+																	INNER JOIN tbl_customerorderdetail
+																		ON tbl_customerorder.CustomerOrderID = tbl_customerorderdetail.CustomerOrderID
+																	INNER JOIN tblproducts
+																		ON tbl_customerorderdetail.ProductID = tblproducts.ProductID
+																	LEFT JOIN tblbranch
+																		ON tblbranch.BranchID = tbl_customerorder.SelltoOtherBranch
+																	INNER JOIN tblproductcategory
+																		ON tblproducts.ProductCategoryID = tblproductcategory.ProductCategoryID
+																	INNER JOIN tblproducts_buydetail
+																		ON tblproducts.ProductID = tblproducts_buydetail.ProductID
+																	INNER JOIN tblproducts_buy 
+																		ON tblproducts_buy.BuyID = tblproducts_buydetail.BuyID
+																	INNER JOIN tblproductsbranch
+																		ON tblproducts.ProductID = tblproductsbranch.ProductID
+															WHERE (tblproducts.ProductName LIKE '%".$sarchprd."%' OR tblproducts.ProductCode LIKE '%".$sarchprd."%' )
+															AND (tbl_customerorder.CustomerOrderDate BETWEEN '".$txtFrom."' AND '".$txtTo."')
+															
+															");
+									}
+									else
+									{
+										// Show product detail that has been sold
+                                      	$select=$db->query("SELECT 
+														tblproductcategory.ProductCategoryName,
+														tblproducts.ProductName,
+														tblproducts.ProductCode,
+														COALESCE((tblproducts_buydetail.BuyPrice),0) AS BuyPrice,
+														tblproducts_buy.BuyDate,
+														COALESCE((tbl_customerorderdetail.SalePrice),0) AS SalePrice,
+														DATE_FORMAT( tbl_customerorder.CustomerOrderDate,'%d %b %Y %h:%m:%s') as SaleDate,
+														COALESCE((tblproductsbranch.OtherCost),0) AS OtherCost,
+														COALESCE((tbl_customerorderdetail.SalePrice),0)-COALESCE((tblproducts_buydetail.BuyPrice),0)-COALESCE((tblproductsbranch.OtherCost),0) AS Income,
+														tbl_customerorder.CustomerOrderID, 
+														tbl_customerorderdetail.CustomerOrderDetailID,
+														tbl_customerorder.InvoiceNo,
+														tbl_customerorder.CustomerOrderDate,
+														tblproducts.ProductID,
+														tbl_customerorderdetail.BranchID,
+														COALESCE((tbl_customerorderdetail.Qty),0) AS Qty,
+														COALESCE((tblproducts_buydetail.BuyPrice),0) * COALESCE((tbl_customerorderdetail.Qty),0)  AS Total_Buying,
+														COALESCE((tbl_customerorderdetail.SalePrice),0) * COALESCE((tbl_customerorderdetail.Qty),0) AS Total_Salling,
+														TIMESTAMPDIFF(MINUTE,tbl_customerorder.CustomerOrderDate,NOW()) AS CalcMin,
+														tbl_customerorder.UserID,
+														tbl_customerorder.SelltoOtherBranch,
+														tblbranch.BranchName,
+														tblproductsbranch.Decription
+														FROM tbl_customerorder
+													INNER JOIN tbl_customerorderdetail
+														ON tbl_customerorder.CustomerOrderID = tbl_customerorderdetail.CustomerOrderID
+													INNER JOIN tblproducts
+														ON tbl_customerorderdetail.ProductID = tblproducts.ProductID
+													LEFT JOIN tblbranch
+														ON tblbranch.BranchID = tbl_customerorder.SelltoOtherBranch
+													INNER JOIN tblproductcategory
+														ON tblproducts.ProductCategoryID = tblproductcategory.ProductCategoryID
+													INNER JOIN tblproducts_buydetail
+														ON tblproducts.ProductID = tblproducts_buydetail.ProductID
+													INNER JOIN tblproducts_buy 
+														ON tblproducts_buy.BuyID = tblproducts_buydetail.BuyID
+													INNER JOIN tblproductsbranch
+														ON tblproducts.ProductID = tblproductsbranch.ProductID
+											WHERE (tblproducts.ProductName LIKE '%".$sarchprd."%' OR tblproducts.ProductCode LIKE '%".$sarchprd."%' )
+											AND (tbl_customerorder.CustomerOrderDate BETWEEN '".$txtFrom."' AND '".$txtTo."') 
+											AND tbl_customerorder.UserID = '".$gettxtuser."'
+											ORDER BY tbl_customerorder.CustomerOrderDate DESC");
+									// Product detail that hasn't sell
+									$select4=$db->query("SELECT tblproductsbranch.ProductID,
+																			tblproductcategory.ProductCategoryName,
+																			tblproducts.ProductName,
+																			tblproducts.ProductCode,
+																			tblproductsbranch.BuyPrice,
+																			tblproducts_buy.BuyDate,
+																			tblproductsbranch.OtherCost, 
+																			tblproductsbranch.SalePrice,
+																			tblproductsbranch.Qty,
+																			tblproductsbranch.Decription
+																		 FROM tblproductsbranch
+																		INNER JOIN tblproducts_buydetail
+																		ON tblproducts_buydetail.ProductID = tblproductsbranch.ProductID
+																		INNER JOIN tblproducts_buy
+																		ON tblproducts_buy.BuyID = tblproducts_buydetail.BuyID
+																		INNER JOIN tblproducts
+																		ON tblproducts.ProductID = tblproductsbranch.ProductID
+																		INNER JOIN tblproductcategory
+																		ON tblproductcategory.ProductCategoryID = tblproducts.ProductCategoryID
+																		WHERE tblproducts_buy.BuyDate BETWEEN '".$txtFrom."' AND '".$txtTo."'
+																		AND tblproductsbranch.Qty = 1
+
+																		AND tblproducts_buy.UserID = '".$gettxtuser."'
+															");
+									
+									// Show Product doesn't sell				
+									$select3=$db->query("SELECT tblproductsbranch.ProductID, 
+																			tblproductsbranch.BuyPrice, 
+																			tblproductsbranch.OtherCost, 
+																			tblproductsbranch.SalePrice,
+																			tblproductsbranch.Qty,
+																			tblproductsbranch.Decription
+																		 FROM tblproductsbranch
+																		INNER JOIN tblproducts_buydetail
+																		ON tblproducts_buydetail.ProductID = tblproductsbranch.ProductID
+																		INNER JOIN tblproducts_buy
+																		ON tblproducts_buy.BuyID = tblproducts_buydetail.BuyID
+																		WHERE tblproducts_buy.BuyDate BETWEEN '".$txtFrom."' AND '".$txtTo."'
+																		AND tblproductsbranch.Qty = 1
+																		AND tblproducts_buy.UserID = '".$gettxtuser."'
+															");
+									// Show Product  sell					
+									$select2=$db->query("SELECT tblproductsbranch.ProductID, 
+																			tblproductsbranch.BuyPrice, 
+																			tblproductsbranch.OtherCost, 
+																			tblproductsbranch.SalePrice,
+																			tblproductsbranch.Qty,
+																			tblproductsbranch.Decription
+																		 FROM tblproductsbranch
+																		INNER JOIN tblproducts_buydetail
+																		ON tblproducts_buydetail.ProductID = tblproductsbranch.ProductID
+																		INNER JOIN tblproducts_buy
+																		ON tblproducts_buy.BuyID = tblproducts_buydetail.BuyID
+																			INNER JOIN tbl_customerorderdetail
+																			ON tbl_customerorderdetail.ProductID = tblproductsbranch.ProductID
+																			INNER JOIN tbl_customerorder
+																			ON tbl_customerorderdetail.CustomerOrderID = tbl_customerorder.CustomerOrderID
+																		WHERE tbl_customerorder.CustomerOrderDate BETWEEN '".$txtFrom."' AND '".$txtTo."'
+																		AND tblproductsbranch.Qty = 0
+																		AND tbl_customerorder.UserID = '".$gettxtuser."'
+															");
+									
+									// Total Income
+									$select1=$db->query("SELECT 
+COALESCE((tbl_customerorderdetail.SalePrice),0)-(COALESCE((tblproducts_buydetail.BuyPrice),0)+COALESCE((tblproductsbranch.OtherCost),0)) AS totalIncome		
+																	FROM tbl_customerorder
+																	INNER JOIN tbl_customerorderdetail
+																		ON tbl_customerorder.CustomerOrderID = tbl_customerorderdetail.CustomerOrderID
+																	INNER JOIN tblproducts
+																		ON tbl_customerorderdetail.ProductID = tblproducts.ProductID
+																	LEFT JOIN tblbranch
+																		ON tblbranch.BranchID = tbl_customerorder.SelltoOtherBranch
+																	INNER JOIN tblproductcategory
+																		ON tblproducts.ProductCategoryID = tblproductcategory.ProductCategoryID
+																	INNER JOIN tblproducts_buydetail
+																		ON tblproducts.ProductID = tblproducts_buydetail.ProductID
+																	INNER JOIN tblproducts_buy 
+																		ON tblproducts_buy.BuyID = tblproducts_buydetail.BuyID
+																	INNER JOIN tblproductsbranch
+																		ON tblproducts.ProductID = tblproductsbranch.ProductID
+															WHERE (tblproducts.ProductName LIKE '%".$sarchprd."%' OR tblproducts.ProductCode LIKE '%".$sarchprd."%' )
+															AND (tbl_customerorder.CustomerOrderDate BETWEEN '".$txtFrom."' AND '".$txtTo."')
+															AND tbl_customerorder.UserID = '".$gettxtuser."'
+															");
+									}
 									
 											$rowselect=$db->dbCountRows($select);
 											if($rowselect>0){
@@ -281,7 +543,7 @@ VALUES('".$buyid."',Now(),'".$U_id."','');");
 																<td class="col-md-2 text-center">'.$SaleDate.'</td>
 																<td class="col-md-1 text-right">$ ';
 																//echo "<input type=\"button\" onclick=\"myOtherCost('".$CustomerOrderDetailID."')\" value=\"$ ".$OtherCost."\" />";
-																echo "<a onclick=\"myOtherCost('".$CustomerOrderDetailID."','".$OtherCost."','".$Decription."')\">".$OtherCost."</a>";
+																echo "<a onclick=\"myOtherCost('".$ProductID."','".$OtherCost."','".$Decription."')\">".$OtherCost."</a>";
 																echo '</td>
 																<td class="col-md-1 text-right"> <a href="frmbuyPrice.php?PrdBranchID='.$ProductID.'&PrdBranchName='.$ProductName.'&PrdBranchCode='.$ProductCode.'&PrdBranchPrice='.$SalePrice.'&buyprice='.$BuyPrice.'&SPrdBrandID='.$getBranchID.',&othecost='.$OtherCost.' ">'.$Income.'</a></td>
 															</tr>';	
@@ -297,46 +559,75 @@ VALUES('".$buyid."',Now(),'".$U_id."','');");
 																<td class="col-md-2 text-center">'.$BuyDate.'</td>
 																<td class="col-md-1 text-right">$ '.$SalePrice.'</td>
 																<td class="col-md-2 text-center">'.$SaleDate.'</td>
-																<td class="col-md-1 text-right">$ '.$OtherCost.'</td>
+																<td class="col-md-1 text-right" ><h5 title="'.$Decription.'">$ '.$OtherCost.'</h5></td>
 																<td class="col-md-1 text-right"> '.$Income.'</td>
 															</tr>';	
 													}
 												
 													
 												} 
-											$select1=$db->query("SELECT 
-COALESCE((tbl_customerorderdetail.SalePrice),0)-COALESCE((tbl_customerorderdetail.BuyPrice),0)-COALESCE((tbl_customerorderdetail.OtherCost),0) AS totalIncome		
-													FROM tbl_customerorder
-													INNER JOIN tbl_customerorderdetail
-														ON tbl_customerorder.CustomerOrderID = tbl_customerorderdetail.CustomerOrderID
-													INNER JOIN tblproducts
-														ON tbl_customerorderdetail.ProductID = tblproducts.ProductID
-													LEFT JOIN tblbranch
-														ON tblbranch.BranchID = tbl_customerorder.SelltoOtherBranch
-													INNER JOIN tblproductcategory
-														ON tblproducts.ProductCategoryID = tblproductcategory.ProductCategoryID
-													INNER JOIN tblproducts_buydetail
-														ON tblproducts.ProductID = tblproducts_buydetail.ProductID
-													INNER JOIN tblproducts_buy 
-														ON tblproducts_buy.BuyID = tblproducts_buydetail.BuyID
-											WHERE (tblproducts.ProductName LIKE '%".$sarchprd."%' OR tblproducts.ProductCode LIKE '%".$sarchprd."%' )
-											AND (tbl_customerorder.CustomerOrderDate BETWEEN '".$txtFrom."' AND '".$txtTo."')
-											AND tbl_customerorder.UserID = '".$U_id."'
-											");
-									
-											$rowselect1=$db->dbCountRows($select1);
-											if($rowselect1>0){
-												$i = 1;
-												$TotalIncome = 0;
-												while($row=$db->fetch($select1)){
+											// Show product doesn't sell
+											echo '<tr class="odd gradeX" style="color:#FF0000;">';
+												
 													
-													$TotalIncome += $row->totalIncome;
+													$rowselect4=$db->dbCountRows($select4);
+													if($rowselect4>0){
+														while($row4=$db->fetch($select4)){
+															echo '<td class="col-md-1 text-left">'.$row4->ProductCategoryName.'</td>
+																<td class="col-md-1 text-left">'.$row4->ProductName.'</td>
+																<td class="col-md-1 text-left">'.$row4->ProductCode.'</td>
+																<td class="col-md-1 text-right">$ '.$row4->BuyPrice.'</td>
+																<td class="col-md-2 text-center">'.$row4->BuyDate.'</td>
+																<td class="col-md-1 text-right">$ '.$row4->SalePrice.'</td>
+																<td class="col-md-2 text-center"> - </td>
+																<td class="col-md-1 text-right">$ '.$row4->OtherCost.' </td>
+																<td class="col-md-1 text-right"> - </td>';			
+														}
+													}
 													
-												}
-											echo '<tr class="odd gradeX">
-															<td colspan="8" class="text-right">Total</td>
+													
+											echo '</tr>';
+											// End Block Total
+											// ------------------------------------------------------------------------------------
+											
+											echo '<tr class="odd gradeX">';
+															
+															
+													
+															$rowselect3=$db->dbCountRows($select3);
+															if($rowselect3>0){
+																echo '<td colspan="2" class="text-left">Products Not Sole = '.$rowselect3.'</td>';
+															}
+															else
+															{
+																echo '<td colspan="2" class="text-left">Products Not Sole = 0</td>';
+															}
+															
+															// Show total income.
+															$rowselect2=$db->dbCountRows($select2);
+															if($rowselect2>0){
+																echo '<td colspan="2" class="text-left">Products Sole = '.$rowselect2.'</td>';
+															}
+															else
+															{
+																echo '<td colspan="2" class="text-left">Products Sole = 0</td>';
+															}
+															
+															
+													
+															$rowselect1=$db->dbCountRows($select1);
+															if($rowselect1>0){
+																$i = 1;
+																$reTotalIncome = 0;
+																while($row0=$db->fetch($select1)){
+																	
+																	$reTotalIncome += $row0->totalIncome;
+																	
+																}
+															echo '<td colspan="4" class="text-right">Total</td>
 														   
-															<td class="text-right"> $ '.round($TotalIncome,2).'</td>
+															<td class="text-right"> $ '.round($reTotalIncome,2).'</td>
+															
 														</tr>';
 												
 											}	
@@ -353,7 +644,14 @@ COALESCE((tbl_customerorderdetail.SalePrice),0)-COALESCE((tbl_customerorderdetai
 											
 												
 											}
-											
+											else
+											{
+												echo '<tr class="even">
+														<td  colspan="11"><font size="+1" color="#CC0000"> No Products Selected.</font></td>
+													
+														</td>
+													</tr>';	
+											}
 											
 										
                                    		echo ' </tbody>';
@@ -449,7 +747,7 @@ COALESCE((tbl_customerorderdetail.SalePrice),0)-COALESCE((tbl_customerorderdetai
 																<td class="col-md-1 text-right">$ '.$SalePrice.'</td>
 																<td class="col-md-2 text-center">'.$SaleDate.'</td>
 																<td class="col-md-1 text-right">';
-																echo "<a onclick=\"myOtherCost('".$CustomerOrderDetailID."','".$OtherCost."','".$Decription."')\">".$OtherCost."</a>";
+																echo "<a onclick=\"myOtherCost('".$ProductID."','".$OtherCost."','".$Decription."')\">".$OtherCost."</a>";
 																echo '</td>
 																
 															</tr>';	
