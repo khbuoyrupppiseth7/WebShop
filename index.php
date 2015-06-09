@@ -90,7 +90,7 @@
                            <div class="col-md-3 pull-right">
                                 <form  role="search" >
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search" value="<?php echo $sarchprd; ?>" name="sarchprd" autofocus>
+                                        <input type="text" class="form-control" placeholder="Search" value="<?php echo $sarchprd; ?>" name="sarchprd" >
                                         <div class="input-group-btn">
                                             <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                                         </div>
@@ -105,7 +105,7 @@
                 </section>
 
                 <!-- Main content -->
-                <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                <div class="modal fade bs-example-modal-sm" tabindex="0" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -170,22 +170,24 @@
                                                    ?>
                                                     </select>
                                             </th>
-                                            <th><input name="txtprdname1" class="form-control" placeholder="Enter Product Name" required autofocus />
+                                            <th><input name="txtprdname1" tabindex="0"  class="form-control" placeholder="Enter Product Name" required autofocus />
                                             	<input name="txtcode1" class="form-control" placeholder="Enter Product Code" required />
                                             </th>
                                             
                                             <th><input type="text" name="txtbuyprice1" placeholder="Buy Price ($)" id="dolarbuying" onKeyUp="ChangetoKhmerbuying()"  onKeyPress="return isNumberKey(event)" required class="form-control currency"  />
                                             <input type="text" name="txtbuypricekh" placeholder="Buy Price (R)" id="khmerbuying" onKeyUp="ChangetoDolarbuying()" onKeyPress="return isNumberKey(event)" required class="form-control currency"  />
                                             </th>
-                                            <th><input type="text"  name="txtsaleprice1" placeholder="Sale Price ($)"  id="dolarSalling" onKeyUp="ChangetoKhmerSalling()" required onKeyPress="return isNumberKey(event)"  class="form-control currency"  />
-                                            <input type="text"  name="txtsalepricekh" placeholder="Sale Price (R)" id="khmerSalling" onKeyUp="ChangetoDollaSalling()" onKeyPress="return isNumberKey(event)"  class="form-control currency"  />
+                                            <th><input type="text"  name="txtsaleprice1" placeholder="Sale Price ($)" value="0"  id="dolarSalling" onKeyUp="ChangetoKhmerSalling()" required onKeyPress="return isNumberKey(event)"  class="form-control currency"  />
+                                            <input type="text"  name="txtsalepricekh" placeholder="Sale Price (R)" value="0" id="khmerSalling" onKeyUp="ChangetoDollaSalling()" onKeyPress="return isNumberKey(event)"  class="form-control currency"  />
                                             </th>
                                             <th>
-                                            <input type="text"  name="txtOtherCost" placeholder="Other Cost($)" required  onKeyPress="return isNumberKey(event)"  class="form-control currency"  />
+                                            <input type="text"  name="txtOtherCost" value="0" placeholder="Other Cost($)" required  onKeyPress="return isNumberKey(event)"  class="form-control currency"  />
                                             <input type="text"  name="txtDesc" placeholder="Description"  class="form-control currency"  />
                                             </th> 
                                            
-                                          	<th><input type="submit" name="btnSaveDirect" class="btn btn-primary" value="Save" /></th>  
+                                          	<th>
+                                            <input type="submit" name="btnSaveDirect"  value="Save" />
+                                            </th>  
                                         	</form>
                                         </tr>
                                     </tbody>
@@ -266,7 +268,7 @@
                       </div>
                         <!-- /.panel-body -->
                <!-- New User -->
-               <div class="modal fade" id="Order" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+               <div class="modal fade" id="Order" tabindex="0" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog">                    
                   <div class="modal-content">
                       <div class="modal-header">
@@ -370,7 +372,7 @@
 								txtProductID.value = getProductID;
 								txtOtherCostdollar.value = getOtherCost;
 								txtDesc.value = getDecription;
-								txtOtherCostreal.value = parseFloat(txtOtherCostdollar.value) * 40 ;
+								txtOtherCostreal.value = parseFloat(txtOtherCostdollar.value) * 4 ;
 							}
 							
 							function ChangeOtherCostDolar() {
@@ -380,7 +382,7 @@
 								}
 								else
 								{
-									txtOtherCostreal.value = parseFloat(txtOtherCostdollar.value) * 40 ;
+									txtOtherCostreal.value = parseFloat(txtOtherCostdollar.value) * 4 ;
 								}
 							}
 							
@@ -392,7 +394,7 @@
 								}
 								else
 								{
-									txtOtherCostdollar.value = parseFloat(txtOtherCostreal.value) / 40 ;
+									txtOtherCostdollar.value = parseFloat(txtOtherCostreal.value) / 4 ;
 								}
 							}
 							
@@ -414,8 +416,8 @@
 								txtOtherCostdollarSale.value = getOtherCost;
 								txtDescSale.value = getDecription;
 								
-								txtOtherCostrealSale.value = parseFloat(txtOtherCostdollarSale.value) * 40;
-								khmer.value = parseFloat(dolar.value) * 40 ;
+								txtOtherCostrealSale.value = parseFloat(txtOtherCostdollarSale.value) * 4;
+								khmer.value = parseFloat(dolar.value) * 4 ;
 							}
 							
 							// Change Form Other Cost Dollar
@@ -426,7 +428,7 @@
 								}
 								else
 								{
-									txtOtherCostrealSale.value = parseFloat(txtOtherCostdollarSale.value) * 40 ;
+									txtOtherCostrealSale.value = parseFloat(txtOtherCostdollarSale.value) * 4 ;
 								}
 							}
 							
@@ -438,7 +440,7 @@
 								}
 								else
 								{
-									txtOtherCostdollarSale.value = parseFloat(txtOtherCostrealSale.value) / 40 ;
+									txtOtherCostdollarSale.value = parseFloat(txtOtherCostrealSale.value) / 4 ;
 								}
 							}
 							
@@ -450,7 +452,7 @@
 								}
 								else
 								{
-									txtdolarSalling.value = parseFloat(txtkhmerSalling.value) / 40 ;
+									txtdolarSalling.value = parseFloat(txtkhmerSalling.value) / 4 ;
 								}
 							}
 							
@@ -462,7 +464,7 @@
 								}
 								else
 								{
-									txtkhmerSalling.value = parseFloat(txtdolarSalling.value) * 40 ;
+									txtkhmerSalling.value = parseFloat(txtdolarSalling.value) * 4 ;
 								}
 							}
 							
@@ -474,7 +476,7 @@
 								}
 								else
 								{
-									txtdolarbuying.value = parseFloat(txtkhmerbuying.value) / 40 ;
+									txtdolarbuying.value = parseFloat(txtkhmerbuying.value) / 4 ;
 								}
 							}
 							// Change Form Dolar to Khmer Buying
@@ -485,7 +487,7 @@
 								}
 								else
 								{
-									txtkhmerbuying.value = parseFloat(txtdolarbuying.value) * 40 ;
+									txtkhmerbuying.value = parseFloat(txtdolarbuying.value) * 4 ;
 								}
 							}			
 							function ChangetoKhmer() {
@@ -496,7 +498,7 @@
 									}
 									else
 									{
-										khmer.value = parseFloat(dolar.value) * 40 ;
+										khmer.value = parseFloat(dolar.value) * 4;
 									}
 								}
 							function ChangetoDolar(){
@@ -507,7 +509,7 @@
 								}
 								else
 								{
-									dolar.value = parseFloat(khmer.value) / 40;
+									dolar.value = parseFloat(khmer.value) / 4;
 								}
 							}
 					   </script>

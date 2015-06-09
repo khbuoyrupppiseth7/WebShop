@@ -1,0 +1,9 @@
+SELECT [RuleID]
+      ,[ProductID]
+      ,[Min] flaot
+      ,[Max] float
+      ,[DayMin] float
+      ,[DayMax] float
+      ,[Atm] float
+      ,[Description]
+  FROM [tblRule]
