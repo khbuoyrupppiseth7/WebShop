@@ -1,5 +1,16 @@
 ﻿
-<?php include 'header.php';?>
+<?php include 'header.php';
+
+$getcheckUser1 = get('checkUser1'); $getcheckUser2 = get('checkUser2');$getcheckUser3 = get('checkUser3'); $getcheckUser4 = get('checkUser4');$getcheckUser5 = get('checkUser5'); $getcheckUser6 = get('checkUser6');$getcheckUser7 = get('checkUser7'); $getcheckUser8 = get('checkUser8');$getcheckUser9 = get('checkUser9'); $getcheckUser10 = get('checkUser10');$getcheckUser11 = get('checkUser11'); $getcheckUser12 = get('checkUser12');$getcheckUser13 = get('checkUser13'); $getcheckUser14 = get('checkUser14');$getcheckUser15 = get('checkUser15'); $getcheckUser16 = get('checkUser16');$getcheckUser17 = get('checkUser17'); $getcheckUser18 = get('checkUser18');$getcheckUser19 = get('checkUser19'); 
+$getcheckUser20 = get('checkUser20');$getcheckUser21 = get('checkUser21'); $getcheckUser22 = get('checkUser22');$getcheckUser23 = get('checkUser23'); $getcheckUser24 = get('checkUser24');$getcheckUser25 = get('checkUser25'); $getcheckUser26 = get('checkUser26');$getcheckUser27 = get('checkUser27'); $getcheckUser28 = get('checkUser28');
+$getcheckUser29 = get('checkUser29'); $getcheckUser30 = get('checkUser30');$getcheckUser31 = get('checkUser31'); $getcheckUser32 = get('checkUser32');$getcheckUser33 = get('checkUser33'); $getcheckUser34 = get('checkUser34');$getcheckUser35 = get('checkUser35'); $getcheckUser36 = get('checkUser36');$getcheckUser37 = get('checkUser37'); 
+$getcheckUser38 = get('checkUser38');$getcheckUser39 = get('checkUser39'); $getcheckUser40 = get('checkUser40');$getcheckUser41 = get('checkUser41'); $getcheckUser42 = get('checkUser42');$getcheckUser43 = get('checkUser43'); $getcheckUser44 = get('checkUser44');$getcheckUser45 = get('checkUser45'); $getcheckUser46 = get('checkUser46');
+$getcheckUser47 = get('checkUser47'); $getcheckUser48 = get('checkUser48');$getcheckUser49 = get('checkUser49'); $getcheckUser50 = get('checkUser50');
+$getcheckUser51 = get('checkUser51');$getcheckUser52 = get('checkUser52');$getcheckUser53 = get('checkUser53');$getcheckUser54 = get('checkUser54');$getcheckUser55 = get('checkUser55');$getcheckUser56 = get('checkUser56');$getcheckUser57 = get('checkUser57');$getcheckUser58 = get('checkUser58');$getcheckUser59 = get('checkUser59');$getcheckUser60 = get('checkUser60');$getcheckUser61 = get('checkUser61');$getcheckUser62 = get('checkUser62');$getcheckUser63 = get('checkUser63');$getcheckUser64 = get('checkUser64');$getcheckUser65 = get('checkUser65');$getcheckUser66 = get('checkUser66');$getcheckUser67 = get('checkUser67');$getcheckUser68 = get('checkUser68');$getcheckUser69 = get('checkUser69');$getcheckUser70 = get('checkUser70');
+	
+	$multiUser = "'".$getcheckUser1."',"."'".$getcheckUser2."',"."'".$getcheckUser3."',"."'".$getcheckUser5."',"."'".$getcheckUser6."',"."'".$getcheckUser7."',"."'".$getcheckUser8."',"."'".$getcheckUser9."',"."'".$getcheckUser10."',"."'".$getcheckUser11."',"."'".$getcheckUser12."',"."'".$getcheckUser13."',"."'".$getcheckUser14."',"."'".$getcheckUser15."',"."'".$getcheckUser16."',"."'".$getcheckUser17."',"."'".$getcheckUser18."',"."'".$getcheckUser19."',"."'".$getcheckUser20."',"."'".$getcheckUser21."',"."'".$getcheckUser22."',"."'".$getcheckUser23."',"."'".$getcheckUser24."',"."'".$getcheckUser25."',"."'".$getcheckUser26."',"."'".$getcheckUser27."',"."'".$getcheckUser28."',"."'".$getcheckUser29."',"."'".$getcheckUser30."',"."'".$getcheckUser31."',"."'".$getcheckUser32."',"."'".$getcheckUser33."',"."'".$getcheckUser34."',"."'".$getcheckUser35."',"."'".$getcheckUser36."',"."'".$getcheckUser37."',"."'".$getcheckUser38."',"."'".$getcheckUser39."',"."'".$getcheckUser40."',"."'".$getcheckUser41."',"."'".$getcheckUser42."',"."'".$getcheckUser43."',"."'".$getcheckUser44."',"."'".$getcheckUser45."',"."'".$getcheckUser46."',"."'".$getcheckUser47."',"."'".$getcheckUser48."',"."'".$getcheckUser49."',"."'".$getcheckUser50."',"."'".$getcheckUser51."',"."'".$getcheckUser52."',"."'".$getcheckUser53."',"."'".$getcheckUser54."',"."'".$getcheckUser55."',"."'".$getcheckUser56."',"."'".$getcheckUser57."',"."'".$getcheckUser58."',"."'".$getcheckUser59."',"."'".$getcheckUser60."',"."'".$getcheckUser61."',"."'".$getcheckUser62."',"."'".$getcheckUser63."',"."'".$getcheckUser64."',"."'".$getcheckUser65."',"."'".$getcheckUser66."',"."'".$getcheckUser67."',"."'".$getcheckUser68."',"."'".$getcheckUser69."',"."'".$getcheckUser70."'";
+
+?>
 
 <?php
 	// Add new product to Produtct Tem
@@ -133,90 +144,10 @@ VALUES('".$buyid."',Now(),'".$U_id."','');");
                              </div>
                            </a> 
                           
-                         <form class="form-inline">
-                         <div class="col-md-9 pull-right" >
-                         <?php
-							if($_SESSION['Level']=='1')
-							{
-								echo '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#NewUser" ><span class="glyphicon glyphicon-th" aria-hidden="true" title="Advance Search"></span></button>';
-							}
-						?>
-                          
-                          <div class="form-group">
-                           
-                            <select class="form-control" name="txtuser">
-                            <?php
-								if($_SESSION['Level']=='1')
-								{
-									$seUser=$db->query("SELECT UserID, BranchID, UserName FROM tblusers WHERE `Status` = 1");
-								}
-								else
-								{
-									$seUser=$db->query("SELECT UserID, BranchID, UserName FROM tblusers WHERE `Status` = 1 AND UserID = '".$U_id."'");
-								}	
-								
-								//$seUser=$db->query("SELECT UserID, BranchID, UserName FROM tblusers WHERE `Status` = 1");
-								$rUser=$db->dbCountRows($seUser);
-								if($rUser>0){
-									$i = 1;
-									
-									while($row=$db->fetch($seUser)){
-										$UserID = $row->UserID;
-										$BranchID = $row->BranchID;
-										$UserName = $row->UserName;
-										
-										
-										if($UserID == $gettxtuser)
-										{
-											echo '<option value="'.$UserID.'" selected="selected">'.$UserName.'</option>';
-										}
-									
-										else
-										{
-											echo '<option value="'.$UserID.'" >'.$UserName.'</option>';
-											
-										}
-									}
-								}
-							?>
-                              
-                            </select>
-                          </div>
-                          <div class="form-group">
-                           
-                            <input type="text" class="form-control some_class" <?php 
-                                    if ($txtFrom == "")
-                                    {
-                                         echo 'value="'.$date_now.'"';
-                                    }
-                                    else
-                                    {
-                                         echo 'value="'.$txtFrom.'"';
-                                    }
-                                ?>  name="txtFrom" id="some_class_1"/>
-                          </div>
-                          <div class="form-group">
-                           
-                             <input type="text" class="form-control some_class" <?php 
-                                    if ($txtFrom == "")
-                                    {
-                                         echo 'value="'.$date_now.'"';
-                                    }
-                                    else
-                                    {
-                                         echo 'value="'.$txtTo.'"';
-                                    }
-                                ?>  name="txtTo" id="some_class_1"/>
-                          </div>
-                          <div class="input-group">
-                           <input type="text" class="form-control" placeholder="Search Products" value="<?php echo $sarchprd; ?>" name="sarchprd" autofocus>
-                            <div class="input-group-btn">
-                                <button name="btnSearch" value="true" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                              
-                            </div>
-                        </div>
-
-                        </form>
+                       
+                         <div class="col-md-9 pull-right"  >
+                          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#NewUser" ><span class="glyphicon glyphicon-th" aria-hidden="true" title="Advance Search"></span></button>
+                         </div> 
                         
                     </div>
                     </h1>
@@ -249,139 +180,7 @@ VALUES('".$buyid."',Now(),'".$U_id."','');");
                                         </tr>
                                     </thead>
                                     <tbody>';
-									if($gettxtuser == '1')
-									{
-									// Show product detail that has been sold
-                                      	$select=$db->query("SELECT 
-														tblproductcategory.ProductCategoryName,
-														tblproducts.ProductName,
-														tblproducts.ProductCode,
-														COALESCE((tblproducts_buydetail.BuyPrice),0) AS BuyPrice,
-														tblproducts_buy.BuyDate,
-														COALESCE((tbl_customerorderdetail.SalePrice),0) AS SalePrice,
-														DATE_FORMAT( tbl_customerorder.CustomerOrderDate,'%d %b %Y %h:%m:%s') as SaleDate,
-														COALESCE((tblproductsbranch.OtherCost),0) AS OtherCost,
-														COALESCE((tbl_customerorderdetail.SalePrice),0)-COALESCE((tblproducts_buydetail.BuyPrice),0)-COALESCE((tblproductsbranch.OtherCost),0) AS Income,
-														tbl_customerorder.CustomerOrderID, 
-														tbl_customerorderdetail.CustomerOrderDetailID,
-														tbl_customerorder.InvoiceNo,
-														tbl_customerorder.CustomerOrderDate,
-														tblproducts.ProductID,
-														tbl_customerorderdetail.BranchID,
-														COALESCE((tbl_customerorderdetail.Qty),0) AS Qty,
-														COALESCE((tblproducts_buydetail.BuyPrice),0) * COALESCE((tbl_customerorderdetail.Qty),0)  AS Total_Buying,
-														COALESCE((tbl_customerorderdetail.SalePrice),0) * COALESCE((tbl_customerorderdetail.Qty),0) AS Total_Salling,
-														TIMESTAMPDIFF(MINUTE,tbl_customerorder.CustomerOrderDate,NOW()) AS CalcMin,
-														tbl_customerorder.UserID,
-														tbl_customerorder.SelltoOtherBranch,
-														tblbranch.BranchName,
-														tblproductsbranch.Decription
-														FROM tbl_customerorder
-													INNER JOIN tbl_customerorderdetail
-														ON tbl_customerorder.CustomerOrderID = tbl_customerorderdetail.CustomerOrderID
-													INNER JOIN tblproducts
-														ON tbl_customerorderdetail.ProductID = tblproducts.ProductID
-													LEFT JOIN tblbranch
-														ON tblbranch.BranchID = tbl_customerorder.SelltoOtherBranch
-													INNER JOIN tblproductcategory
-														ON tblproducts.ProductCategoryID = tblproductcategory.ProductCategoryID
-													INNER JOIN tblproducts_buydetail
-														ON tblproducts.ProductID = tblproducts_buydetail.ProductID
-													INNER JOIN tblproducts_buy 
-														ON tblproducts_buy.BuyID = tblproducts_buydetail.BuyID
-													INNER JOIN tblproductsbranch
-														ON tblproducts.ProductID = tblproductsbranch.ProductID
-											WHERE (tblproducts.ProductName LIKE '%".$sarchprd."%' OR tblproducts.ProductCode LIKE '%".$sarchprd."%' )
-											AND (tbl_customerorder.CustomerOrderDate BETWEEN '".$txtFrom."' AND '".$txtTo."') 
-											
-											ORDER BY tbl_customerorder.CustomerOrderDate DESC");
-									// Product detail that hasn't sell
-									$select4=$db->query("SELECT tblproductsbranch.ProductID,
-																			tblproductcategory.ProductCategoryName,
-																			tblproducts.ProductName,
-																			tblproducts.ProductCode,
-																			tblproductsbranch.BuyPrice,
-																			tblproducts_buy.BuyDate,
-																			tblproductsbranch.OtherCost, 
-																			tblproductsbranch.SalePrice,
-																			tblproductsbranch.Qty,
-																			tblproductsbranch.Decription
-																		 FROM tblproductsbranch
-																		INNER JOIN tblproducts_buydetail
-																		ON tblproducts_buydetail.ProductID = tblproductsbranch.ProductID
-																		INNER JOIN tblproducts_buy
-																		ON tblproducts_buy.BuyID = tblproducts_buydetail.BuyID
-																		INNER JOIN tblproducts
-																		ON tblproducts.ProductID = tblproductsbranch.ProductID
-																		INNER JOIN tblproductcategory
-																		ON tblproductcategory.ProductCategoryID = tblproducts.ProductCategoryID
-																		WHERE tblproducts_buy.BuyDate BETWEEN '".$txtFrom."' AND '".$txtTo."'
-																		AND tblproductsbranch.Qty = 1
-																		
-															");
 									
-									// Show Product doesn't sell				
-									$select3=$db->query("SELECT tblproductsbranch.ProductID, 
-																			tblproductsbranch.BuyPrice, 
-																			tblproductsbranch.OtherCost, 
-																			tblproductsbranch.SalePrice,
-																			tblproductsbranch.Qty,
-																			tblproductsbranch.Decription
-																		 FROM tblproductsbranch
-																		INNER JOIN tblproducts_buydetail
-																		ON tblproducts_buydetail.ProductID = tblproductsbranch.ProductID
-																		INNER JOIN tblproducts_buy
-																		ON tblproducts_buy.BuyID = tblproducts_buydetail.BuyID
-																		WHERE tblproducts_buy.BuyDate BETWEEN '".$txtFrom."' AND '".$txtTo."'
-																		AND tblproductsbranch.Qty = 1
-																		
-															");
-									// Show Product  sell					
-									$select2=$db->query("SELECT tblproductsbranch.ProductID, 
-																			tblproductsbranch.BuyPrice, 
-																			tblproductsbranch.OtherCost, 
-																			tblproductsbranch.SalePrice,
-																			tblproductsbranch.Qty,
-																			tblproductsbranch.Decription
-																		 FROM tblproductsbranch
-																		INNER JOIN tblproducts_buydetail
-																		ON tblproducts_buydetail.ProductID = tblproductsbranch.ProductID
-																		INNER JOIN tblproducts_buy
-																		ON tblproducts_buy.BuyID = tblproducts_buydetail.BuyID
-																			INNER JOIN tbl_customerorderdetail
-																			ON tbl_customerorderdetail.ProductID = tblproductsbranch.ProductID
-																			INNER JOIN tbl_customerorder
-																			ON tbl_customerorderdetail.CustomerOrderID = tbl_customerorder.CustomerOrderID
-																		WHERE tbl_customerorder.CustomerOrderDate BETWEEN '".$txtFrom."' AND '".$txtTo."'
-																		AND tblproductsbranch.Qty = 0
-																	
-															");
-									
-									// Total Income
-									$select1=$db->query("SELECT 
-COALESCE((tbl_customerorderdetail.SalePrice),0)-(COALESCE((tblproducts_buydetail.BuyPrice),0)+COALESCE((tblproductsbranch.OtherCost),0)) AS totalIncome		
-																	FROM tbl_customerorder
-																	INNER JOIN tbl_customerorderdetail
-																		ON tbl_customerorder.CustomerOrderID = tbl_customerorderdetail.CustomerOrderID
-																	INNER JOIN tblproducts
-																		ON tbl_customerorderdetail.ProductID = tblproducts.ProductID
-																	LEFT JOIN tblbranch
-																		ON tblbranch.BranchID = tbl_customerorder.SelltoOtherBranch
-																	INNER JOIN tblproductcategory
-																		ON tblproducts.ProductCategoryID = tblproductcategory.ProductCategoryID
-																	INNER JOIN tblproducts_buydetail
-																		ON tblproducts.ProductID = tblproducts_buydetail.ProductID
-																	INNER JOIN tblproducts_buy 
-																		ON tblproducts_buy.BuyID = tblproducts_buydetail.BuyID
-																	INNER JOIN tblproductsbranch
-																		ON tblproducts.ProductID = tblproductsbranch.ProductID
-															WHERE (tblproducts.ProductName LIKE '%".$sarchprd."%' OR tblproducts.ProductCode LIKE '%".$sarchprd."%' )
-															AND (tbl_customerorder.CustomerOrderDate BETWEEN '".$txtFrom."' AND '".$txtTo."')
-															
-															");
-									}
-									else
-									{
 										// Show product detail that has been sold
                                       	$select=$db->query("SELECT 
 														tblproductcategory.ProductCategoryName,
@@ -424,7 +223,7 @@ COALESCE((tbl_customerorderdetail.SalePrice),0)-(COALESCE((tblproducts_buydetail
 														ON tblproducts.ProductID = tblproductsbranch.ProductID
 											WHERE (tblproducts.ProductName LIKE '%".$sarchprd."%' OR tblproducts.ProductCode LIKE '%".$sarchprd."%' )
 											AND (tbl_customerorder.CustomerOrderDate BETWEEN '".$txtFrom."' AND '".$txtTo."') 
-											AND tbl_customerorder.UserID = '".$gettxtuser."'
+											AND tbl_customerorder.UserID IN (".$multiUser.")
 											ORDER BY tbl_customerorder.CustomerOrderDate DESC");
 									// Product detail that hasn't sell
 									$select4=$db->query("SELECT tblproductsbranch.ProductID,
@@ -448,8 +247,7 @@ COALESCE((tbl_customerorderdetail.SalePrice),0)-(COALESCE((tblproducts_buydetail
 																		ON tblproductcategory.ProductCategoryID = tblproducts.ProductCategoryID
 																		WHERE tblproducts_buy.BuyDate BETWEEN '".$txtFrom."' AND '".$txtTo."'
 																		AND tblproductsbranch.Qty = 1
-
-																		AND tblproducts_buy.UserID = '".$gettxtuser."'
+																		AND tblproducts_buy.UserID IN (".$multiUser.")
 															");
 									
 									// Show Product doesn't sell				
@@ -466,7 +264,7 @@ COALESCE((tbl_customerorderdetail.SalePrice),0)-(COALESCE((tblproducts_buydetail
 																		ON tblproducts_buy.BuyID = tblproducts_buydetail.BuyID
 																		WHERE tblproducts_buy.BuyDate BETWEEN '".$txtFrom."' AND '".$txtTo."'
 																		AND tblproductsbranch.Qty = 1
-																		AND tblproducts_buy.UserID = '".$gettxtuser."'
+																		AND tblproducts_buy.UserID IN (".$multiUser.")
 															");
 									// Show Product  sell					
 									$select2=$db->query("SELECT tblproductsbranch.ProductID, 
@@ -486,7 +284,7 @@ COALESCE((tbl_customerorderdetail.SalePrice),0)-(COALESCE((tblproducts_buydetail
 																			ON tbl_customerorderdetail.CustomerOrderID = tbl_customerorder.CustomerOrderID
 																		WHERE tbl_customerorder.CustomerOrderDate BETWEEN '".$txtFrom."' AND '".$txtTo."'
 																		AND tblproductsbranch.Qty = 0
-																		AND tbl_customerorder.UserID = '".$gettxtuser."'
+																		AND tbl_customerorder.UserID IN (".$multiUser.")
 															");
 									
 									// Total Income
@@ -509,9 +307,9 @@ COALESCE((tbl_customerorderdetail.SalePrice),0)-(COALESCE((tblproducts_buydetail
 																		ON tblproducts.ProductID = tblproductsbranch.ProductID
 															WHERE (tblproducts.ProductName LIKE '%".$sarchprd."%' OR tblproducts.ProductCode LIKE '%".$sarchprd."%' )
 															AND (tbl_customerorder.CustomerOrderDate BETWEEN '".$txtFrom."' AND '".$txtTo."')
-															AND tbl_customerorder.UserID = '".$gettxtuser."'
+															AND tbl_customerorder.UserID IN (".$multiUser.")
 															");
-									}
+									
 									
 											$rowselect=$db->dbCountRows($select);
 											if($rowselect>0){
@@ -944,6 +742,10 @@ COALESCE((tbl_customerorderdetail.SalePrice),0)-(COALESCE((tblproducts_buydetail
                               
                             </div>
                         </div>
+                        <!--<div class="modal-footer">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                            <button name="btnSearch" value="true" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                          </div>-->
                     </div>
                     </form>
                   </div>

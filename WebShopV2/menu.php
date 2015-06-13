@@ -57,7 +57,7 @@
 											<li><a href="frmbranch.php">3.1 Branch</a></li>
 											<li><a href="frmtotalproducts.php?BranchID=0">3.2 All Products</a></li>
 											<li><a href="frmCategory.php">3.3 Category</a></li>
-											
+											<li><a href="frmRule.php">3.4 Rule</a></li>
 										</ul>
 							</li>';
 							

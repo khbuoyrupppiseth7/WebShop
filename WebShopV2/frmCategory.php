@@ -34,7 +34,7 @@
                 <section class="content-header">
                     <h1>
                        
-                        <small><a ><i class="fa fa-dashboard"></i> Branch Info</a></small>
+                        <small><a ><i class="fa fa-dashboard"></i> Category Info</a></small>
                     </h1>
                     <!--<ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>

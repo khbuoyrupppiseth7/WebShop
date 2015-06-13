@@ -1,13 +1,13 @@
 <?php
 class MyConnection
 {
-    	private $host = '174.136.57.160';
-		private $username = 'www7tech_Pro';
-		private $database = 'www7tech_WebShopDB';
+    	private $host = 'localhost';
+		private $username = 'root';
+		private $database = '7webstock';
 		private $mylink;
 		private $sql;
 		private $result;
-		private $password = 'piseth123';
+		private $password = '';
 		
 		
 		/*
@@ -19,13 +19,13 @@ class MyConnection
 		private $result;
 		private $password = '';
 		
-		private $host = 'localhost';
-		private $username = 'sm24all_stock';
-		private $database = 'sm24all_stock';
+    	private $host = '174.136.57.160';
+		private $username = 'www7tech_Pro';
+		private $database = 'www7tech_WebShopDB';
 		private $mylink;
 		private $sql;
 		private $result;
-		private $password = 'QNUbK$gT$d^y';
+		private $password = 'piseth123';
 		
 		*/
 		

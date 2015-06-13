@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50536
 File Encoding         : 65001
 
-Date: 2015-05-21 15:45:39
+Date: 2015-06-12 13:45:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -102,6 +102,7 @@ INSERT INTO `tblproductcategory` VALUES ('1429330149', 'LG999', '');
 INSERT INTO `tblproductcategory` VALUES ('1429775770', 'Book Store', 'Engish book');
 INSERT INTO `tblproductcategory` VALUES ('1430899717', 'Car', '');
 INSERT INTO `tblproductcategory` VALUES ('1432021651', 'Service', '123');
+INSERT INTO `tblproductcategory` VALUES ('1432372512', '7Technology', 'ssssssssss');
 
 -- ----------------------------
 -- Table structure for `tblproducts`
@@ -122,10 +123,11 @@ CREATE TABLE `tblproducts` (
 -- ----------------------------
 -- Records of tblproducts
 -- ----------------------------
-INSERT INTO `tblproducts` VALUES ('1432088792', 'IPhone 6 Plus', '1', '6+', '10', '3', '5', null, '1');
-INSERT INTO `tblproducts` VALUES ('1432088852', 'Setup New Windows 7', '1432021651', 'Setup New Windows 7', '1', '0', '7', null, '0');
-INSERT INTO `tblproducts` VALUES ('1432094739', 'Setup New Windows XP', '1432021651', '1', '1', '0', '9', null, '0');
-INSERT INTO `tblproducts` VALUES ('1432094766', 'GalaxyX1', '2', '1', '100', '5', '0', null, '1');
+INSERT INTO `tblproducts` VALUES ('1433841824', 'Book1', '2', 'b1', '1', '5', '7', null, '0');
+INSERT INTO `tblproducts` VALUES ('1433842238', 'Setup new windows', '1432021651', 'win7', '1', '0', '7', null, '0');
+INSERT INTO `tblproducts` VALUES ('14339959612', 'sssss', '1', 'ssssssss', '1', '3', '25', 'Desc', null);
+INSERT INTO `tblproducts` VALUES ('14339959772', 's3', '1', 's3', '1', '3', '4', 'Desc', null);
+INSERT INTO `tblproducts` VALUES ('14339960812', 'd4', '1', 'c', '1', '2', '6', 'Desc', null);
 
 -- ----------------------------
 -- Table structure for `tblproductsbranch`
@@ -149,12 +151,11 @@ CREATE TABLE `tblproductsbranch` (
 -- ----------------------------
 -- Records of tblproductsbranch
 -- ----------------------------
-INSERT INTO `tblproductsbranch` VALUES ('1432088792', '123', '3', '0', '5', '106', '0', '10', null, null, null, '1');
-INSERT INTO `tblproductsbranch` VALUES ('1432088852', '123', '0', '0', '7', '2', '0', '1', null, null, null, '0');
-INSERT INTO `tblproductsbranch` VALUES ('1432094739', '123', '0', '0', '9', '1', '0', '1', null, null, null, '0');
-INSERT INTO `tblproductsbranch` VALUES ('1432094766', '123', '5', '0', '0', '100', '0', '100', null, null, null, '1');
-INSERT INTO `tblproductsbranch` VALUES ('1432088852', '1234', '0', null, '7', '3', null, null, '1-1234', '123', '1432088852', null);
-INSERT INTO `tblproductsbranch` VALUES ('1432094739', '1234', '0', null, '9', '4', null, null, '1-1234', '123', '1432094739', null);
+INSERT INTO `tblproductsbranch` VALUES ('1433841824', '123', '5', '0', '7', '0', '0', '1', '', null, null, '0');
+INSERT INTO `tblproductsbranch` VALUES ('1433842238', '123', '0', '0', '7', '0', '0', '1', '', null, null, '0');
+INSERT INTO `tblproductsbranch` VALUES ('14339959612', '123', '3', '0', '25', '1', null, null, '', null, null, null);
+INSERT INTO `tblproductsbranch` VALUES ('14339959772', '123', '3', '0', '4', '1', null, null, '', null, null, null);
+INSERT INTO `tblproductsbranch` VALUES ('14339960812', '123', '2', '8', '6', '1', null, null, '', null, null, null);
 
 -- ----------------------------
 -- Table structure for `tblproducts_buy`
@@ -170,9 +171,11 @@ CREATE TABLE `tblproducts_buy` (
 -- ----------------------------
 -- Records of tblproducts_buy
 -- ----------------------------
-INSERT INTO `tblproducts_buy` VALUES ('1432088862', '2015-05-20 09:27:42', '1', '');
-INSERT INTO `tblproducts_buy` VALUES ('1432092547', '2015-05-20 10:29:07', '1', '');
-INSERT INTO `tblproducts_buy` VALUES ('1432094874', '2015-05-20 11:07:54', '1', '');
+INSERT INTO `tblproducts_buy` VALUES ('1433841827', '2015-06-09 16:23:47', '1', '');
+INSERT INTO `tblproducts_buy` VALUES ('1433842241', '2015-06-09 16:30:41', '1', '');
+INSERT INTO `tblproducts_buy` VALUES ('1433995961', '2015-06-11 11:12:41', '1', '');
+INSERT INTO `tblproducts_buy` VALUES ('1433995977', '2015-06-11 11:12:57', '1', '');
+INSERT INTO `tblproducts_buy` VALUES ('1433996081', '2015-06-11 11:14:41', '1', '');
 
 -- ----------------------------
 -- Table structure for `tblproducts_buydetail`
@@ -192,12 +195,51 @@ CREATE TABLE `tblproducts_buydetail` (
 -- ----------------------------
 -- Records of tblproducts_buydetail
 -- ----------------------------
-INSERT INTO `tblproducts_buydetail` VALUES ('14320888621', '1432088862', '1', '1432088792', '10', '3', null, '');
-INSERT INTO `tblproducts_buydetail` VALUES ('14320888622', '1432088862', '1', '1432088852', '1', '0', null, '');
-INSERT INTO `tblproducts_buydetail` VALUES ('14320925481', '1432092547', '1', '1432088852', '1', '0', null, '');
-INSERT INTO `tblproducts_buydetail` VALUES ('14320948741', '1432094874', '1', '1432094739', '1', '0', null, '');
-INSERT INTO `tblproducts_buydetail` VALUES ('14320948742', '1432094874', '1', '1432094766', '100', '5', null, '');
-INSERT INTO `tblproducts_buydetail` VALUES ('14320948743', '1432094874', '1', '1432088792', '100', '3', null, '');
+INSERT INTO `tblproducts_buydetail` VALUES ('14338418271', '1433841827', '1', '1433841824', '1', '5', null, '');
+INSERT INTO `tblproducts_buydetail` VALUES ('14338422411', '1433842241', '1', '1433842238', '1', '0', null, '');
+INSERT INTO `tblproducts_buydetail` VALUES ('14339959613', '1433995961', '1', '14339959612', '1', '3', null, '');
+INSERT INTO `tblproducts_buydetail` VALUES ('14339959773', '1433995977', '1', '14339959772', '1', '3', null, '');
+INSERT INTO `tblproducts_buydetail` VALUES ('14339960813', '1433996081', '1', '14339960812', '1', '2', null, '');
+
+-- ----------------------------
+-- Table structure for `tblrule`
+-- ----------------------------
+DROP TABLE IF EXISTS `tblrule`;
+CREATE TABLE `tblrule` (
+  `RuleID` text,
+  `ProductID` text,
+  `Min` float DEFAULT NULL,
+  `Max` float DEFAULT NULL,
+  `DayMin` float DEFAULT NULL,
+  `DayMax` float DEFAULT NULL,
+  `Atm` float DEFAULT NULL,
+  `Description` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tblrule
+-- ----------------------------
+INSERT INTO `tblrule` VALUES ('1433984910', '1433841824', '10', '20', '30', '40', '50', 'Description 20');
+INSERT INTO `tblrule` VALUES ('1433986200', '1433842238', '50', '50', '10', '50', '23456800', 'Welcome');
+INSERT INTO `tblrule` VALUES ('1433991981', '1433842238', '2', '4', '3', '5', '5555', 'wwww');
+
+-- ----------------------------
+-- Table structure for `tbltest`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbltest`;
+CREATE TABLE `tbltest` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbltest
+-- ----------------------------
+INSERT INTO `tbltest` VALUES ('1', '1');
+INSERT INTO `tbltest` VALUES ('2', '123');
+INSERT INTO `tbltest` VALUES ('3', '123');
+INSERT INTO `tbltest` VALUES ('4', '123');
 
 -- ----------------------------
 -- Table structure for `tblusers`
@@ -261,10 +303,8 @@ CREATE TABLE `tbl_customerorder` (
 -- ----------------------------
 -- Records of tbl_customerorder
 -- ----------------------------
-INSERT INTO `tbl_customerorder` VALUES ('1432093096', '123', null, '1432093096', '2015-05-20 10:38:16', null, null, null, null, null, null, null, '1', null);
-INSERT INTO `tbl_customerorder` VALUES ('1432093117', '123', null, '1432093117', '2015-05-20 10:38:37', null, null, null, null, null, null, null, '1', null);
-INSERT INTO `tbl_customerorder` VALUES ('1432093396', '123', null, '1432093396', '2015-05-20 10:43:16', null, null, null, null, null, null, null, '1', null);
-INSERT INTO `tbl_customerorder` VALUES ('1432095313', '1234', null, '1432095313', '2015-05-20 11:15:13', null, null, null, null, null, null, '1-1234', '1', '1234');
+INSERT INTO `tbl_customerorder` VALUES ('1433995936', '123', null, '1433995936', '2015-06-11 11:12:16', null, null, null, null, null, null, null, '1', null);
+INSERT INTO `tbl_customerorder` VALUES ('1433995942', '123', null, '1433995942', '2015-06-11 11:12:22', null, null, null, null, null, null, null, '1', null);
 
 -- ----------------------------
 -- Table structure for `tbl_customerorderdetail`
@@ -290,14 +330,8 @@ CREATE TABLE `tbl_customerorderdetail` (
 -- ----------------------------
 -- Records of tbl_customerorderdetail
 -- ----------------------------
-INSERT INTO `tbl_customerorderdetail` VALUES ('14320930961', '123', null, '1432093096', '1432088852', '2', null, '0', '7', '0', '0', '0', '14', 'Powered by 7Technology');
-INSERT INTO `tbl_customerorderdetail` VALUES ('14320930962', '123', null, '1432093096', '1432088792', '1', null, '3', '5', '0', '0', '0', '5', 'Powered by 7Technology');
-INSERT INTO `tbl_customerorderdetail` VALUES ('14320931171', '123', null, '1432093117', '1432088852', '3', null, '0', '7', '0', '0', '0', '21', 'Powered by 7Technology');
-INSERT INTO `tbl_customerorderdetail` VALUES ('14320931172', '123', null, '1432093117', '1432088792', '2', null, '3', '5', '0', '0', '0', '10', 'Powered by 7Technology');
-INSERT INTO `tbl_customerorderdetail` VALUES ('14320933961', '123', null, '1432093396', '1432088792', '1', null, '3', '5', '0', '0', '0', '5', 'Powered by 7Technology');
-INSERT INTO `tbl_customerorderdetail` VALUES ('14320933962', '123', null, '1432093396', '1432088852', '2', null, '0', '7', '0', '0', '0', '14', 'Powered by 7Technology');
-INSERT INTO `tbl_customerorderdetail` VALUES ('143209531311', '1234', null, '1432095313', '1432088852', '3', null, '0', '7', '0', '0', '0', '21', 'Powered by 7Technology');
-INSERT INTO `tbl_customerorderdetail` VALUES ('143209531322', '1234', null, '1432095313', '1432094739', '4', null, '0', '9', '0', '0', '0', '36', 'Powered by 7Technology');
+INSERT INTO `tbl_customerorderdetail` VALUES ('14339959362', '123', null, '1433995936', '1433841824', '1', null, '5', '7', '0', '0', '0', '0', 'Powered by 7Technology');
+INSERT INTO `tbl_customerorderdetail` VALUES ('14339959422', '123', null, '1433995942', '1433842238', '1', null, '0', '7', '0', '0', '0', '0', 'Powered by 7Technology');
 
 -- ----------------------------
 -- Table structure for `tbl_service_type`
@@ -375,10 +409,9 @@ DELIMITER ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `spSearchPrdBuy`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spSearchPrdBuy`( 
-IN _SearchPrdBuy NVARCHAR(500) )
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spSearchPrdBuy`(IN _SearchPrdBuy NVARCHAR(500))
 BEGIN
-	IF(_SearchPrdBuy) is NULL THEN
+	IF(_SearchPrdBuy = "") THEN
 		SELECT 
 			`tblproducts`.ProductID,
 			`tblproducts`.ProductName,
@@ -387,10 +420,16 @@ BEGIN
 			`tblproducts`.ProductCode,
 			`tblproducts`.Qty,
 			`tblproducts`.BuyPrice,
-			`tblproducts`.SalePrice
+			`tblproducts`.SalePrice,
+			tblproductsbranch.OtherCost,
+			tblproductsbranch.Decription
 			FROM `tblproducts`
 			INNER JOIN tblproductcategory
-			ON tblproducts.ProductCategoryID = tblproductcategory.ProductCategoryID ;
+			ON tblproducts.ProductCategoryID = tblproductcategory.ProductCategoryID
+		INNER JOIN tblproductsbranch
+		ON tblproductsbranch.ProductID = tblproducts.ProductID
+		WHERE tblproductsbranch.Qty >0
+		LIMIT 7;
 	ELSE
 		SELECT 
 			`tblproducts`.ProductID,
@@ -400,13 +439,19 @@ BEGIN
 			`tblproducts`.ProductCode,
 			`tblproducts`.Qty,
 			`tblproducts`.BuyPrice,
-			`tblproducts`.SalePrice
+			`tblproducts`.SalePrice,
+			tblproductsbranch.OtherCost,
+			tblproductsbranch.Decription
 			FROM `tblproducts`
 			INNER JOIN tblproductcategory
 			ON tblproducts.ProductCategoryID = tblproductcategory.ProductCategoryID
+			INNER JOIN tblproductsbranch
+			ON tblproductsbranch.ProductID = tblproducts.ProductID
 			WHERE  
 			tblproducts.ProductName LIKE CONCAT(N'%' , _SearchPrdBuy , '%')
-			OR tblproducts.ProductCode LIKE CONCAT(N'%' , _SearchPrdBuy , '%');
+			OR tblproducts.ProductCode LIKE CONCAT(N'%' , _SearchPrdBuy , '%')
+			AND tblproductsbranch.Qty >0;
+
 	END IF;
 	
 
